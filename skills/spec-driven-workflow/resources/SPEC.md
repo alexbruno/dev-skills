@@ -36,3 +36,7 @@ Describe the current state, why this change is needed, and (for bug fixes) repro
 ## Open Questions
 
 - [ ] <Unresolved question, if any>
+
+## Supporting Assets (Optional)
+
+- [<Short description>](./assets/<filename>) — <Supporting screenshot, diagram, or evidence stored in `workflow/assets/`>

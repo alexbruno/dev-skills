@@ -40,6 +40,12 @@ Describe who is affected, what problem or opportunity exists, and what measurabl
 - **Expected Behavior**: <What should happen instead>
 - **Business / Customer Impact**: <Severity, affected users, workarounds>
 
+### Supporting Assets & Evidence (Optional)
+
+Store screenshots (including annotated captures), mockups, or supporting files in `workflow/assets/` and link them here:
+
+- ![<Short description>](./assets/<filename>) — <What this image or file highlights>
+
 ### Product Acceptance Expectations
 
 - [ ] <High-level outcome observable by a user or stakeholder>

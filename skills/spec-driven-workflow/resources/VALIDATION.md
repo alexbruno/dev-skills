@@ -37,3 +37,7 @@ Observable user flows, commands, UI paths, or scenarios the Product Owner can ch
 ### Validation Notes / Requested Adjustments
 
 - <Feedback from the Product Owner if `Changes Requested`, or sign-off note if `Approved`>
+
+### Supporting Assets (Optional)
+
+- [<Short description>](./assets/<filename>) — <Validation screenshot, recording, or evidence stored in `workflow/assets/`>

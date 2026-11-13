@@ -16,6 +16,7 @@ Brief overall assessment of correctness, spec alignment, maintainability, and te
 - **[R1]** `path/to/file.ext:L10-L25` — **Status**: `open`
   - **Issue**: Describe the bug, security risk, or broken requirement.
   - **Action**: Concrete fix required.
+  - **Evidence** *(optional)*: [<Short description>](./assets/<filename>)
 
 ### Major
 

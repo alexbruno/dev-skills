@@ -29,3 +29,7 @@ Summarize the chosen architecture, key design decisions, and any trade-offs.
 ## Risks & Rollback
 
 - Potential failure modes and how to mitigate or revert safely.
+
+## Supporting Assets (Optional)
+
+- [<Short description>](./assets/<filename>) — <Architecture diagram, trace, or supporting evidence stored in `workflow/assets/`>

@@ -47,6 +47,7 @@ Combine Scrum's value-driven product ownership with Kanban's upstream flow disci
 - When preparing a demand for engineering, complete the **Active Demand Brief** section:
   - Articulate the **User Problem & Business Value**.
   - Write a clear **User Story / Job-to-be-Done** (or **Bug Impact & Observed Behavior** for bug fixes).
+  - Attach any screenshots (including annotated UI bug captures) or supporting evidence in `workflow/assets/` and link them in `workflow/UPSTREAM.md` (e.g., `./assets/<filename>`).
   - Define **Product Acceptance Expectations** (what a user or stakeholder must be able to do or observe).
   - State **Out of Scope** items explicitly to prevent scope creep.
   - Verify the **Definition of Ready (DoR)** checklist before handing off to the Architect.
@@ -68,7 +69,7 @@ Combine Scrum's value-driven product ownership with Kanban's upstream flow disci
 
 - **Never prescribe technical implementation**: Do not specify file paths, database schemas, frameworks, class designs, or code changes. Leave *how* to the Architect (`SPEC.md`/`PLAN.md`) and Worker.
 - **Never write or modify production code or test suites**.
-- **Only create or edit product-governance artifacts**: `workflow/UPSTREAM.md`, `workflow/VALIDATION.md` (validation notes and sign-off), and `.gitignore` (ensuring `workflow/` is ignored).
+- **Only create or edit product-governance artifacts**: `workflow/UPSTREAM.md`, `workflow/VALIDATION.md` (validation notes and sign-off), `workflow/assets/` (supporting screenshots or evidence), and `.gitignore` (ensuring `workflow/` is ignored).
 - **Never commit `workflow/`**: Ensure `workflow/` remains untracked by Git per `spec-driven-workflow`.
 
 ## Handoff Lifecycle

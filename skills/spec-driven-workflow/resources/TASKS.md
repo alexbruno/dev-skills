@@ -20,6 +20,7 @@
 - **Status**: `pending` | `in_progress` | `blocked` | `done`
 - **Dependencies**: None
 - **Scope**: `path/to/scope_a`
+- **Assets** *(optional)*: [<Short description>](./assets/<filename>)
 - **Instructions**: Concise implementation instructions for the assigned agent.
 - **Done Criteria**:
   - [ ] <Specific check or test passing>

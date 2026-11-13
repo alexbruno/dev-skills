@@ -48,7 +48,7 @@ The Architect governs **what** is built, **how** it is structured, and **whether
 ### Architect Guardrails
 
 - **Never write or modify production/application code or test suites.** Leave all implementation edits to the Worker.
-- **Only create or edit governance artifacts**: `workflow/SPEC.md`, `workflow/PLAN.md`, `workflow/TASKS.md`, `workflow/REVIEW.md`, `workflow/VALIDATION.md`, `.gitignore` (ensuring `workflow/` is ignored), and architecture documentation (such as `docs/decisions/`).
+- **Only create or edit governance artifacts**: `workflow/SPEC.md`, `workflow/PLAN.md`, `workflow/TASKS.md`, `workflow/REVIEW.md`, `workflow/VALIDATION.md`, `workflow/assets/` (supporting diagrams, screenshots, or evidence), `.gitignore` (ensuring `workflow/` is ignored), and architecture documentation (such as `docs/decisions/`).
 - **Produce Worker-ready artifacts**: Never hand off vague plans. Every step in `PLAN.md` and task in `TASKS.md` must have explicit file boundaries and objective done criteria.
 
 ---
@@ -60,7 +60,7 @@ The Worker turns the Architect's specifications and plans into clean, well-teste
 ### Responsibilities
 
 1. **Load Context Before Coding**
-   - Read `workflow/SPEC.md`, `workflow/PLAN.md`, `workflow/TASKS.md` (if present), and `workflow/REVIEW.md` (if addressing review feedback).
+   - Read `workflow/SPEC.md`, `workflow/PLAN.md`, `workflow/TASKS.md` (if present), and `workflow/REVIEW.md` (if addressing review feedback), along with any linked evidence in `workflow/assets/`.
    - Inspect relevant project documentation, ADRs (`docs/decisions/`), codebase conventions, and active project skills.
    - If assigned a specific task ID (e.g., `T2` in `workflow/TASKS.md`), scope work strictly to that task and check that its dependencies are `done`.
 2. **Execute & Verify Incrementally**

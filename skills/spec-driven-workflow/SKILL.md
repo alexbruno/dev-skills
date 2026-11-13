@@ -33,6 +33,7 @@ By default, create artifacts at the repository root under `workflow/`:
 
 ```text
 workflow/
+├── assets/       # Optional: Screenshots, diagrams, logs, and supporting evidence linked by workflow docs
 ├── UPSTREAM.md   # Optional: Product Owner backlog, product intent, and Ready brief
 ├── SPEC.md       # Required for any non-trivial change
 ├── PLAN.md       # Required before implementation starts
@@ -41,13 +42,21 @@ workflow/
 └── VALIDATION.md # Optional: Architect-to-PO delivery handoff and value sign-off
 ```
 
-If multiple independent initiatives run concurrently in the same repository, scope each one under `workflow/<change-slug>/` instead of overwriting root files.
+If multiple independent initiatives run concurrently in the same repository, scope each one under `workflow/<change-slug>/` (including its own `workflow/<change-slug>/assets/` if needed) instead of overwriting root files.
 
 If the `workflow/` directory or any required artifact does not exist yet, **create the directory and initialize the missing files automatically** using the templates in `./resources/`.
 
+### Supporting Assets & Evidence (`workflow/assets/`)
+
+Any agent or contributor in **any phase** (`UPSTREAM.md`, `SPEC.md`, `PLAN.md`, `TASKS.md`, `REVIEW.md`, or `VALIDATION.md`) may attach screenshots (e.g., annotated UI bug captures), diagrams, logs, or other supporting files to enrich context for downstream or peer agents:
+
+- **Storage location**: Always save supporting files inside `workflow/assets/` (or `workflow/<change-slug>/assets/` for scoped concurrent work). Never scatter temporary evidence files in the repository root, source directories, or tracked `docs/` folders.
+- **Naming**: Use clear, descriptive filenames (preferably kebab-case, prefixed with the related item/finding ID when applicable, such as `u1-checkout-bug-annotated.png` or `r2-mobile-overflow.png`).
+- **Linking**: Reference attached files from any `workflow/*.md` document using relative Markdown links or image embeds (e.g., `![Annotated checkout bug](./assets/u1-checkout-bug-annotated.png)` or `[Failure log](./assets/test-failure.log)`).
+
 ### Version Control (`.gitignore`)
 
-The `workflow/` directory contains local process-management and guidance artifacts and **must never be tracked by Git**:
+The `workflow/` directory—including `workflow/assets/` and all subdirectories—contains local process-management and guidance artifacts and **must never be tracked by Git**:
 
 - Ensure `workflow/` is listed in the repository's `.gitignore` (add it automatically when initializing `workflow/` if missing).
 - Never stage (`git add`) or commit `workflow/` or any files inside it. If `workflow/` is somehow already tracked, warn the user before untrack/cleanup operations.
@@ -132,5 +141,5 @@ Before considering the workflow complete:
 4. If `workflow/VALIDATION.md` is used, the Product Owner has marked it `Approved` (and updated any `UPSTREAM.md` backlog item status to `Done`).
 5. **Ask the user for final sign-off and cleanup**: Once the plan, tasks (if any), review, and validation (if used) are complete, explicitly ask the user if everything is ready and whether the `workflow/` artifacts can be cleaned up.
    - **Never delete** the root `workflow/` directory or its root files (`UPSTREAM.md`, `SPEC.md`, `PLAN.md`, `TASKS.md`, `REVIEW.md`, `VALIDATION.md`).
-   - When the user confirms cleanup, **clear/reset the contents** of the root files (e.g., emptying them or resetting them to their blank templates) while keeping the directory and files intact. If `UPSTREAM.md` holds ongoing backlog items the user wants to keep, preserve the backlog table and clear only the completed demand brief.
+   - When the user confirms cleanup, **clear/reset the contents** of the root files (e.g., emptying them or resetting them to their blank templates) while keeping the directory and files intact, and remove completed-change files inside `workflow/assets/` (preserving any assets still referenced by ongoing `UPSTREAM.md` backlog items). If `UPSTREAM.md` holds ongoing backlog items the user wants to keep, preserve the backlog table and clear only the completed demand brief.
    - **Exception**: Subdirectories created inside `workflow/` by agents working in parallel on independent executions (e.g., `workflow/<change-slug>/`) **may be deleted** upon user confirmation.
