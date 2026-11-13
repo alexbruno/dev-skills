@@ -16,6 +16,7 @@ Curated agent skills for AI spec-driven development, sequential reasoning, and p
 | [`decision-records`](./skills/decision-records/SKILL.md) | Document significant architectural and technical trade-offs as lightweight ADRs. |
 | [`environment-preflight`](./skills/environment-preflight/SKILL.md) | Inspect project stack and verify shell/CLI access to required development tools, notifying the user of any gaps. |
 | [`incremental-implementation`](./skills/incremental-implementation/SKILL.md) | Build features and refactorings in small, verified vertical slices aligned with `PLAN.md` and `TASKS.md`. |
+| [`npm-version-management`](./skills/npm-version-management/SKILL.md) | Enforce disciplined NPM package versioning via `npm version` CLI, keeping `package.json` synchronized with Git version tags. |
 | [`planning-and-task-breakdown`](./skills/planning-and-task-breakdown/SKILL.md) | Stack-agnostic execution planning and task decomposition aligned with `SPEC.md`, `PLAN.md`, and conditional `TASKS.md`. |
 | [`spec-driven-workflow`](./skills/spec-driven-workflow/SKILL.md) | Default software engineering workflow using a `workflow/` directory (`SPEC.md`, `PLAN.md`, `TASKS.md`, and `REVIEW.md`) to specify, plan, execute, and review changes. |
 | [`systematic-debugging`](./skills/systematic-debugging/SKILL.md) | Root-cause analysis, regression testing, and disciplined debugging before applying fixes. |
