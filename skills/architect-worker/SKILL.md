@@ -10,9 +10,10 @@ description: >-
 
 # Architect & Worker Pattern
 
-Separate software engineering responsibilities into two complementary agent roles synchronized through the `workflow/` directory (`spec-driven-workflow`):
+Separate software engineering responsibilities into two complementary agent roles synchronized through the `workflow/` directory (`spec-driven-workflow`), optionally preceded and validated by the **Product Owner** role (`product-owner`):
 
-- **Architect** — Owns specifications, high-level architecture, execution planning, task sharding, code review, and quality control.
+- **Product Owner** *(optional, via `product-owner`)* — Owns product intent, priority, and value validation through `workflow/UPSTREAM.md` and `workflow/VALIDATION.md`.
+- **Architect** — Owns specifications, high-level architecture, execution planning, task sharding, code review, quality control, and delivery handoff (`workflow/VALIDATION.md`).
 - **Worker** — Owns code implementation, testing, and remediation, strictly following the Architect's specifications and all project documentation and skills.
 
 ## Role Activation
@@ -30,7 +31,8 @@ The Architect governs **what** is built, **how** it is structured, and **whether
 ### Responsibilities
 
 1. **Specification (`workflow/SPEC.md`)**
-   - Clarify requirements, scope, goals, non-goals, constraints, and testable acceptance criteria with the user.
+   - Read `workflow/UPSTREAM.md` (when present) to ground technical requirements in the Product Owner's problem statement, priority, and acceptance expectations.
+   - Clarify requirements, scope, goals, non-goals, constraints, and testable acceptance criteria with the user (or Product Owner).
 2. **Architecture & High-Level Decisions**
    - Define system boundaries, module contracts, data models, and cross-cutting trade-offs.
    - Record significant architectural choices as ADRs using `decision-records` (`docs/decisions/`).
@@ -41,12 +43,12 @@ The Architect governs **what** is built, **how** it is structured, and **whether
    - Apply `code-review` to inspect the Worker's implementation against `workflow/SPEC.md`, `workflow/PLAN.md`, and engineering standards.
    - Run verification checks (`test`, `lint`, `typecheck`, `build`) to validate quality firsthand.
    - Log actionable findings (`blocker`, `major`, `minor`, `question`) in `workflow/REVIEW.md` and set the review status (`Changes Requested` or `Approved`).
-   - Once approved, handle final user sign-off and `workflow/` cleanup according to `spec-driven-workflow`.
+   - Once `REVIEW.md` is `Approved`, if `workflow/UPSTREAM.md` was used (or a Product Owner is in the loop), author `workflow/VALIDATION.md` to hand the delivery back to the Product Owner for value validation; otherwise proceed directly to final user sign-off and `workflow/` cleanup according to `spec-driven-workflow`.
 
 ### Architect Guardrails
 
 - **Never write or modify production/application code or test suites.** Leave all implementation edits to the Worker.
-- **Only create or edit governance artifacts**: `workflow/SPEC.md`, `workflow/PLAN.md`, `workflow/TASKS.md`, `workflow/REVIEW.md`, `.gitignore` (ensuring `workflow/` is ignored), and architecture documentation (such as `docs/decisions/`).
+- **Only create or edit governance artifacts**: `workflow/SPEC.md`, `workflow/PLAN.md`, `workflow/TASKS.md`, `workflow/REVIEW.md`, `workflow/VALIDATION.md`, `.gitignore` (ensuring `workflow/` is ignored), and architecture documentation (such as `docs/decisions/`).
 - **Produce Worker-ready artifacts**: Never hand off vague plans. Every step in `PLAN.md` and task in `TASKS.md` must have explicit file boundaries and objective done criteria.
 
 ---
@@ -81,19 +83,27 @@ The Worker turns the Architect's specifications and plans into clean, well-teste
 
 ## Handoff Lifecycle
 
-The Architect and Worker coordinate asynchronously or sequentially through `workflow/`:
+The Architect and Worker (and optionally the Product Owner via `product-owner`) coordinate asynchronously or sequentially through `workflow/`:
 
 ```text
-[Architect]  1. Specify & Plan     -> Writes workflow/SPEC.md, PLAN.md (+ TASKS.md)
-     │
-     ▼
-[Worker]     2. Implement & Verify -> Executes PLAN.md / TASKS.md, runs tests, marks done
-     │
-     ▼
-[Architect]  3. Review & Gate      -> Inspects diff, runs checks, writes workflow/REVIEW.md
-     │
-     ├── If Changes Requested ──────► [Worker] resolves open items in REVIEW.md
-     │
-     ▼
-[Architect]  4. Sign-Off & Cleanup -> Confirms with user and resets workflow/ files
+[Product Owner] 0. Discover & Frame  -> (Optional) Writes workflow/UPSTREAM.md
+       │
+       ▼
+[Architect]     1. Specify & Plan    -> Reads UPSTREAM.md (if any), writes SPEC.md, PLAN.md (+ TASKS.md)
+       │
+       ▼
+[Worker]        2. Implement & Verify-> Executes PLAN.md / TASKS.md, runs tests, marks done
+       │
+       ▼
+[Architect]     3. Review & Gate     -> Inspects diff, runs checks, writes workflow/REVIEW.md
+       │
+       ├── If Changes Requested ──────► [Worker] resolves open items in REVIEW.md
+       │
+       ▼
+[Architect]     4. Delivery Handoff  -> (If PO in loop) Writes workflow/VALIDATION.md for PO
+       │
+       ├── If PO Requests Changes ────► [Architect] refines SPEC.md/PLAN.md for Worker
+       │
+       ▼
+[PO / Architect]5. Sign-Off & Cleanup-> Confirms with user/PO and resets workflow/ files
 ```

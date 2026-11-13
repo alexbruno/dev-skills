@@ -2,25 +2,28 @@
 name: spec-driven-workflow
 description: >-
   Default software engineering workflow using a `workflow/` directory with
-  `SPEC.md`, `PLAN.md`, `TASKS.md`, and `REVIEW.md`. Use this skill as the
-  standard process whenever starting a feature, bug fix, refactoring,
-  architecture change, or code review—to specify requirements, plan execution,
-  coordinate parallel tasks, and track review findings.
+  optional `UPSTREAM.md` and `VALIDATION.md` alongside `SPEC.md`, `PLAN.md`,
+  `TASKS.md`, and `REVIEW.md`. Use this skill as the standard process whenever
+  starting a feature, bug fix, refactoring, architecture change, or code
+  review—to capture product intent, specify requirements, plan execution,
+  coordinate parallel tasks, track review findings, and validate delivery.
 ---
 
 # Spec-Driven Workflow
 
-Adopt this workflow as the **standard software engineering process** for any non-trivial change. Do not jump straight into writing code; follow the gated lifecycle below using the `workflow/` directory to separate **what** needs to change (`SPEC.md`), **how** it will be built (`PLAN.md`), **who** executes independent pieces (`TASKS.md`), and **what** needs attention after implementation (`REVIEW.md`).
+Adopt this workflow as the **standard software engineering process** for any non-trivial change. Do not jump straight into writing code; follow the gated lifecycle below using the `workflow/` directory to separate **why/value** (`UPSTREAM.md`), **what** needs to change (`SPEC.md`), **how** it will be built (`PLAN.md`), **who** executes independent pieces (`TASKS.md`), **what** needs attention after implementation (`REVIEW.md`), and **whether** the delivered value meets product expectations (`VALIDATION.md`).
 
 ## Standard Operating Flow
 
 Follow these phases in order:
 
-1. **Specify (`SPEC.md`)** — Define the problem, scope, constraints, and acceptance criteria before designing or coding.
+0. **Discover & Frame (`UPSTREAM.md`, conditional)** — Capture product intent, user value, priority, or a prioritized mini-backlog of evolutions/bugs (typically owned by the `product-owner` role) before technical specification.
+1. **Specify (`SPEC.md`)** — Define the problem, scope, constraints, and acceptance criteria (consuming `UPSTREAM.md` when present) before designing or coding.
 2. **Plan (`PLAN.md`)** — Map the technical approach, affected files, ordered steps, and verification strategy.
 3. **Shard (`TASKS.md`, conditional)** — Break the plan into trackable tasks only when complexity, multi-scope work, or parallel execution warrants it.
 4. **Implement** — Execute against `PLAN.md` (or `TASKS.md`), keeping artifact statuses current as work progresses.
 5. **Review (`REVIEW.md`)** — Record code review findings (human or agent) and resolve blockers/major issues before completion.
+6. **Validate (`VALIDATION.md`, conditional)** — Hand the approved delivery back to the Product Owner (or stakeholder) with plain-language summary and validation scenarios to confirm product value before cleanup.
 
 > **Trivial changes exception**: Skip `workflow/` artifacts only for trivial, self-contained edits (e.g., typo fixes, single-line formatting, or minor comment updates) where specification and planning add no value.
 
@@ -30,10 +33,12 @@ By default, create artifacts at the repository root under `workflow/`:
 
 ```text
 workflow/
-├── SPEC.md      # Required for any non-trivial change
-├── PLAN.md      # Required before implementation starts
-├── TASKS.md     # Optional: only for large plans or parallel/async agent work
-└── REVIEW.md    # Created during human or agent code review
+├── UPSTREAM.md   # Optional: Product Owner backlog, product intent, and Ready brief
+├── SPEC.md       # Required for any non-trivial change
+├── PLAN.md       # Required before implementation starts
+├── TASKS.md      # Optional: only for large plans or parallel/async agent work
+├── REVIEW.md     # Created during human or agent code review
+└── VALIDATION.md # Optional: Architect-to-PO delivery handoff and value sign-off
 ```
 
 If multiple independent initiatives run concurrently in the same repository, scope each one under `workflow/<change-slug>/` instead of overwriting root files.
@@ -48,6 +53,17 @@ The `workflow/` directory contains local process-management and guidance artifac
 - Never stage (`git add`) or commit `workflow/` or any files inside it. If `workflow/` is somehow already tracked, warn the user before untrack/cleanup operations.
 
 ## Artifact Lifecycle
+
+### 0. `workflow/UPSTREAM.md` — Capture Product Intent & Backlog (Conditional)
+
+Create or update `UPSTREAM.md` when a Product Owner (or stakeholder) wants to frame a new feature, improvement, or bug fix—or maintain a prioritized mini-backlog of software evolutions—before engineering specification begins.
+
+- **Purpose**: Separate product discovery, priority, and user value (*why* and *who*) from technical design (`SPEC.md`).
+- **Template**: Start from [UPSTREAM.md](./resources/UPSTREAM.md).
+- **Rules**:
+  - Maintain an ordered **Upstream Backlog** table for candidate evolutions, features, and bug reports (`Idea`, `Refining`, `Ready`, `In Downstream`, `Done`).
+  - Complete the **Active Demand Brief** and **Definition of Ready (DoR)** before handing an item off to `SPEC.md`.
+  - Keep `UPSTREAM.md` free of technical implementation details (file paths, schemas, or code).
 
 ### 1. `workflow/SPEC.md` — Define the Change
 
@@ -96,6 +112,16 @@ Create or update `REVIEW.md` when a human or reviewing agent inspects the implem
   - Point to exact file paths, line ranges, or symbols, and explain *why* the issue matters.
   - Track resolution status (`open`, `resolved`, `wontfix`) so nothing is lost across review rounds.
 
+### 5. `workflow/VALIDATION.md` — Product Delivery Validation (Conditional)
+
+Create `VALIDATION.md` after `REVIEW.md` is approved whenever `UPSTREAM.md` was used or a Product Owner / stakeholder needs a structured handoff to validate the delivered value.
+
+- **Purpose**: Translate the completed engineering delivery back into plain-language product outcomes, validation steps, and formal acceptance sign-off.
+- **Template**: Start from [VALIDATION.md](./resources/VALIDATION.md).
+- **Rules**:
+  - Prepared by the Architect (or lead engineer) with a **Delivery Summary**, **Upstream Value Mapping**, and observable **How to Validate** scenarios.
+  - Reviewed and signed off by the Product Owner (`Approved` or `Changes Requested`) before closing the cycle.
+
 ## Verification & Cleanup
 
 Before considering the workflow complete:
@@ -103,7 +129,8 @@ Before considering the workflow complete:
 1. Every acceptance criterion in `workflow/SPEC.md` is satisfied and verified by tests or explicit checks.
 2. All steps in `workflow/PLAN.md` (and `workflow/TASKS.md`, if used) are completed or explicitly deferred.
 3. All `blocker` and `major` items in `workflow/REVIEW.md` are marked `resolved` (or `wontfix` with rationale).
-4. **Ask the user for final sign-off and cleanup**: Once the plan, tasks (if any), and review are complete, explicitly ask the user if everything is ready and whether the `workflow/` artifacts can be cleaned up.
-   - **Never delete** the root `workflow/` directory or its root files (`SPEC.md`, `PLAN.md`, `TASKS.md`, `REVIEW.md`).
-   - When the user confirms cleanup, **clear/reset the contents** of the root files (e.g., emptying them or resetting them to their blank templates) while keeping the directory and files intact.
+4. If `workflow/VALIDATION.md` is used, the Product Owner has marked it `Approved` (and updated any `UPSTREAM.md` backlog item status to `Done`).
+5. **Ask the user for final sign-off and cleanup**: Once the plan, tasks (if any), review, and validation (if used) are complete, explicitly ask the user if everything is ready and whether the `workflow/` artifacts can be cleaned up.
+   - **Never delete** the root `workflow/` directory or its root files (`UPSTREAM.md`, `SPEC.md`, `PLAN.md`, `TASKS.md`, `REVIEW.md`, `VALIDATION.md`).
+   - When the user confirms cleanup, **clear/reset the contents** of the root files (e.g., emptying them or resetting them to their blank templates) while keeping the directory and files intact. If `UPSTREAM.md` holds ongoing backlog items the user wants to keep, preserve the backlog table and clear only the completed demand brief.
    - **Exception**: Subdirectories created inside `workflow/` by agents working in parallel on independent executions (e.g., `workflow/<change-slug>/`) **may be deleted** upon user confirmation.
