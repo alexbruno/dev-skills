@@ -8,6 +8,7 @@ Curated agent skills for AI spec-driven development, sequential reasoning, and p
 
 | Skill | Description |
 | :--- | :--- |
+| [`architect-worker`](./skills/architect-worker/SKILL.md) | Role-based multi-agent workflow separating specification, planning, architecture, and review (`Architect`) from implementation (`Worker`). |
 | [`code-review`](./skills/code-review/SKILL.md) | Structured, five-axis code review aligned with `spec-driven-workflow` (`SPEC.md`, `PLAN.md`, `REVIEW.md`). |
 | [`code-simplification`](./skills/code-simplification/SKILL.md) | Simplify code for human readability, clarity, and directness without changing behavior. |
 | [`codebase-indexing`](./skills/codebase-indexing/SKILL.md) | Index, synchronize, and query a codebase using CodeGraph (`.codegraph/`) and Markdown-formatted Repomix snapshots. |
