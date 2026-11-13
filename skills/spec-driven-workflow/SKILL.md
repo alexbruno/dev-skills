@@ -40,6 +40,13 @@ If multiple independent initiatives run concurrently in the same repository, sco
 
 If the `workflow/` directory or any required artifact does not exist yet, **create the directory and initialize the missing files automatically** using the templates in `./resources/`.
 
+### Version Control (`.gitignore`)
+
+The `workflow/` directory contains local process-management and guidance artifacts and **must never be tracked by Git**:
+
+- Ensure `workflow/` is listed in the repository's `.gitignore` (add it automatically when initializing `workflow/` if missing).
+- Never stage (`git add`) or commit `workflow/` or any files inside it. If `workflow/` is somehow already tracked, warn the user before untrack/cleanup operations.
+
 ## Artifact Lifecycle
 
 ### 1. `workflow/SPEC.md` — Define the Change
