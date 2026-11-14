@@ -1,6 +1,6 @@
 # Delivery Validation: <Short Title>
 
-- **Upstream**: [UPSTREAM.md](./UPSTREAM.md)
+- **Backlog**: [BACKLOG.md](./BACKLOG.md)
 - **Spec**: [SPEC.md](./SPEC.md)
 - **Review**: [REVIEW.md](./REVIEW.md)
 - **Prepared By**: <Architect / Lead Engineer>
@@ -11,11 +11,11 @@
 
 Plain-language overview of what was built or fixed, written for product and stakeholder review rather than code-level inspection.
 
-## Upstream Value Mapping
+## Backlog Value Mapping
 
-| Upstream ID | Product Expectation | Delivery Status | Notes |
+| Backlog ID | Product Expectation | Delivery Status | Notes |
 | :--- | :--- | :--- | :--- |
-| U1 | <Original expectation from UPSTREAM.md> | Delivered \| Partial \| Deferred | <Summary of how it was met> |
+| B1 | <Original expectation from BACKLOG.md> | Delivered \| Partial \| Deferred | <Summary of how it was met> |
 
 ## How to Validate
 
@@ -26,13 +26,13 @@ Observable user flows, commands, UI paths, or scenarios the Product Owner can ch
 
 ## Known Limitations & Follow-Ups
 
-- <Any deferred scope, edge cases, or recommended next items for the `UPSTREAM.md` backlog>
+- <Any deferred scope, edge cases, or recommended next items for the `BACKLOG.md` backlog>
 
 ## Product Owner Sign-Off
 
-- [ ] Delivered behavior matches the product intent and user value in `UPSTREAM.md`.
+- [ ] Delivered behavior matches the product intent and user value in `BACKLOG.md`.
 - [ ] Product acceptance expectations are satisfied.
-- [ ] Ready to close this cycle and reset/archive `workflow/` artifacts (or log follow-ups in `UPSTREAM.md`).
+- [ ] Ready to close this cycle and reset/archive `workflow/` artifacts (or log follow-ups in `BACKLOG.md`).
 
 ### Validation Notes / Requested Adjustments
 

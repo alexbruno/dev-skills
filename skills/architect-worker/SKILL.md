@@ -12,7 +12,7 @@ description: >-
 
 Separate software engineering responsibilities into two complementary agent roles synchronized through the `workflow/` directory (`spec-driven-workflow`), optionally preceded and validated by the **Product Owner** role (`product-owner`):
 
-- **Product Owner** *(optional, via `product-owner`)* — Owns product intent, priority, and value validation through `workflow/UPSTREAM.md` and `workflow/VALIDATION.md`.
+- **Product Owner** *(optional, via `product-owner`)* — Owns product intent, priority, and value validation through `workflow/BACKLOG.md` and `workflow/VALIDATION.md`.
 - **Architect** — Owns specifications, high-level architecture, execution planning, task sharding, code review, quality control, and delivery handoff (`workflow/VALIDATION.md`).
 - **Worker** — Owns code implementation, testing, and remediation, strictly following the Architect's specifications and all project documentation and skills.
 
@@ -31,7 +31,7 @@ The Architect governs **what** is built, **how** it is structured, and **whether
 ### Responsibilities
 
 1. **Specification (`workflow/SPEC.md`)**
-   - Read `workflow/UPSTREAM.md` (when present) to ground technical requirements in the Product Owner's problem statement, priority, and acceptance expectations.
+   - Read `workflow/BACKLOG.md` (when present) to ground technical requirements in the Product Owner's problem statement, priority, and acceptance expectations.
    - Clarify requirements, scope, goals, non-goals, constraints, and testable acceptance criteria with the user (or Product Owner).
 2. **Architecture & High-Level Decisions**
    - Define system boundaries, module contracts, data models, and cross-cutting trade-offs.
@@ -43,7 +43,7 @@ The Architect governs **what** is built, **how** it is structured, and **whether
    - Apply `code-review` to inspect the Worker's implementation against `workflow/SPEC.md`, `workflow/PLAN.md`, and engineering standards.
    - Run verification checks (`test`, `lint`, `typecheck`, `build`) to validate quality firsthand.
    - Log actionable findings (`blocker`, `major`, `minor`, `question`) in `workflow/REVIEW.md` and set the review status (`Changes Requested` or `Approved`).
-   - Once `REVIEW.md` is `Approved`, if `workflow/UPSTREAM.md` was used (or a Product Owner is in the loop), author `workflow/VALIDATION.md` to hand the delivery back to the Product Owner for value validation; otherwise proceed directly to final user sign-off and `workflow/` cleanup according to `spec-driven-workflow`.
+   - Once `REVIEW.md` is `Approved`, if `workflow/BACKLOG.md` was used (or a Product Owner is in the loop), author `workflow/VALIDATION.md` to hand the delivery back to the Product Owner for value validation; otherwise proceed directly to final user sign-off and `workflow/` cleanup according to `spec-driven-workflow`.
 
 ### Architect Guardrails
 
@@ -87,10 +87,10 @@ The Worker turns the Architect's specifications and plans into clean, well-teste
 The Architect and Worker (and optionally the Product Owner via `product-owner`) coordinate asynchronously or sequentially through `workflow/`:
 
 ```text
-[Product Owner] 0. Discover & Frame  -> (Optional) Writes workflow/UPSTREAM.md
+[Product Owner] 0. Discover & Frame  -> (Optional) Writes workflow/BACKLOG.md
        │
        ▼
-[Architect]     1. Specify & Plan    -> Reads UPSTREAM.md (if any), writes SPEC.md, PLAN.md (+ TASKS.md)
+[Architect]     1. Specify & Plan    -> Reads BACKLOG.md (if any), writes SPEC.md, PLAN.md (+ TASKS.md)
        │
        ▼
 [Worker]        2. Implement & Verify-> Executes PLAN.md / TASKS.md, runs tests, marks done
