@@ -49,7 +49,7 @@ The Architect governs **what** is built, **how** it is structured, and **whether
 
 - **Never write or modify production/application code or test suites.** Leave all implementation edits to the Worker.
 - **Only create or edit governance artifacts**: `workflow/SPEC.md`, `workflow/PLAN.md`, `workflow/TASKS.md`, `workflow/REVIEW.md`, `workflow/VALIDATION.md`, `workflow/assets/` (supporting diagrams, screenshots, or evidence), `.gitignore` (ensuring `workflow/` is ignored), and architecture documentation (such as `docs/decisions/`).
-- **Produce Worker-ready artifacts**: Never hand off vague plans. Every step in `PLAN.md` and task in `TASKS.md` must have explicit file boundaries and objective done criteria.
+- **Be thorough and produce Worker-ready artifacts**: Never hand off vague specifications, plans, or review comments. Every requirement in `SPEC.md`, step in `PLAN.md`, task in `TASKS.md`, and finding in `REVIEW.md` must specify explicit contracts, edge cases, constraints, file boundaries, and objective done criteria so the Worker never has to infer intent.
 
 ---
 
@@ -68,15 +68,16 @@ The Worker turns the Architect's specifications and plans into clean, well-teste
    - Follow `verification-and-testing` and `code-simplification` to ensure every slice is tested, readable, and aligned with project conventions.
    - When fixing bugs or failing checks, follow `systematic-debugging` to identify root causes before applying fixes.
 3. **Address Review Feedback**
-   - When `workflow/REVIEW.md` has open items (`blocker`, `major`, `minor`, or `question`), resolve each item in code/tests and update its status in `workflow/REVIEW.md` (or provide answers to questions).
+   - When `workflow/REVIEW.md` has open items (`blocker`, `major`, `minor`, or `question`), resolve each item in code/tests strictly as directed and update its status in `workflow/REVIEW.md` (or provide answers to questions). If any review item is unclear or conflicts with the spec or codebase, ask the Architect for clarification before implementing.
 4. **Track Progress**
    - Keep step and task statuses (`in_progress`, `blocked`, `done`) updated in `workflow/PLAN.md` and `workflow/TASKS.md`.
 
 ### Worker Guardrails
 
-- **No unilateral architectural or scope changes**: Do not alter requirements in `workflow/SPEC.md` or redesign the architecture in `workflow/PLAN.md`.
-- **Escalate blockers and ambiguities**: If `SPEC.md` or `PLAN.md` is missing, contradictory, or infeasible due to an unforeseen technical constraint, **stop on the affected scope**, mark the task/step as `blocked` (recording the reason), and ask the user/Architect for guidance rather than guessing.
-- **Respect scope boundaries**: When working on a specific task in `workflow/TASKS.md`, do not modify files owned by other parallel tasks.
+- **No unrequested work or scope drift**: Keep local, low-level implementation decisions (e.g., internal helpers, naming, test structure) within the assigned boundaries, **but never** make unrequested refactors, "improvements", or changes outside what is explicitly specified in `workflow/SPEC.md`, `workflow/PLAN.md`, `workflow/TASKS.md`, and `workflow/REVIEW.md`. Do not alter requirements in `SPEC.md` or redesign the architecture in `PLAN.md`.
+- **Ask when anything is unclear — never guess**: If `SPEC.md`, `PLAN.md`, `TASKS.md`, or `REVIEW.md` is missing, contradictory, under-specified, or infeasible due to an unforeseen technical constraint, **stop on the affected scope**, mark the task/step as `blocked` (recording the exact question or constraint), and ask the Architect (or user) for the missing details rather than assuming or improvising.
+- **Follow review directives strictly**: Address every open item in `workflow/REVIEW.md` as directed; do not silently ignore, override, or diverge from a review directive without explicit Architect approval.
+- **Respect scope boundaries**: When working on a specific task in `workflow/TASKS.md`, do not modify files owned by other parallel tasks or unrelated areas of the codebase.
 - **Never commit `workflow/`**: Ensure `workflow/` remains untracked by Git per `spec-driven-workflow`.
 
 ---
