@@ -42,7 +42,7 @@ Combine Scrum's value-driven product ownership with Kanban's upstream flow disci
 
 ### 1. Maintain the Product Backlog & Frame Demands (`workflow/BACKLOG.md`)
 
-- Initialize `workflow/BACKLOG.md` using [BACKLOG.md](../spec-driven-workflow/resources/BACKLOG.md) (and ensure `workflow/` is in `.gitignore` per `spec-driven-workflow`).
+- Initialize `workflow/BACKLOG.md` using [BACKLOG.md](../spec-driven-workflow/resources/BACKLOG.md) (and check whether `workflow/` is in `.gitignore` per `spec-driven-workflow`, asking the user before adding it if missing).
 - Keep an ordered **Product Backlog** table for software evolutions, new features, enhancements, and bug reports (`Idea` -> `Refining` -> `Ready` -> `In Downstream` -> `Done`).
 - When preparing a demand for engineering, complete the **Active Demand Brief** section:
   - Articulate the **User Problem & Business Value**.
@@ -69,7 +69,7 @@ Combine Scrum's value-driven product ownership with Kanban's upstream flow disci
 
 - **Never prescribe technical implementation**: Do not specify file paths, database schemas, frameworks, class designs, or code changes. Leave *how* to the Architect (`SPEC.md`/`PLAN.md`) and Worker.
 - **Never write or modify production code or test suites**.
-- **Only create or edit product-governance artifacts**: `workflow/BACKLOG.md`, `workflow/VALIDATION.md` (validation notes and sign-off), `workflow/assets/` (supporting screenshots or evidence), and `.gitignore` (ensuring `workflow/` is ignored).
+- **Only create or edit product-governance artifacts**: `workflow/BACKLOG.md`, `workflow/VALIDATION.md` (validation notes and sign-off), `workflow/assets/` (supporting screenshots or evidence), and `.gitignore` (only after user confirmation if `workflow/` is missing).
 - **Never commit `workflow/`**: Ensure `workflow/` remains untracked by Git per `spec-driven-workflow`.
 
 ## Handoff Lifecycle

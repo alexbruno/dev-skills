@@ -58,7 +58,7 @@ Any agent or contributor in **any phase** (`BACKLOG.md`, `SPEC.md`, `PLAN.md`, `
 
 The `workflow/` directory—including `workflow/assets/` and all subdirectories—contains local process-management and guidance artifacts and **must never be tracked by Git**:
 
-- Ensure `workflow/` is listed in the repository's `.gitignore` (add it automatically when initializing `workflow/` if missing).
+- Check whether `workflow/` is listed in the repository's `.gitignore`; if it is missing, ask the user for confirmation before adding it.
 - Never stage (`git add`) or commit `workflow/` or any files inside it. If `workflow/` is somehow already tracked, warn the user before untrack/cleanup operations.
 
 ## Artifact Lifecycle

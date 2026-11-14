@@ -48,7 +48,7 @@ The Architect governs **what** is built, **how** it is structured, and **whether
 ### Architect Guardrails
 
 - **Never write or modify production/application code or test suites.** Leave all implementation edits to the Worker.
-- **Only create or edit governance artifacts**: `workflow/SPEC.md`, `workflow/PLAN.md`, `workflow/TASKS.md`, `workflow/REVIEW.md`, `workflow/VALIDATION.md`, `workflow/assets/` (supporting diagrams, screenshots, or evidence), `.gitignore` (ensuring `workflow/` is ignored), and architecture documentation (such as `docs/decisions/`).
+- **Only create or edit governance artifacts**: `workflow/SPEC.md`, `workflow/PLAN.md`, `workflow/TASKS.md`, `workflow/REVIEW.md`, `workflow/VALIDATION.md`, `workflow/assets/` (supporting diagrams, screenshots, or evidence), `.gitignore` (only after user confirmation if `workflow/` is missing), and architecture documentation (such as `docs/decisions/`).
 - **Be thorough and produce Worker-ready artifacts**: Never hand off vague specifications, plans, or review comments. Every requirement in `SPEC.md`, step in `PLAN.md`, task in `TASKS.md`, and finding in `REVIEW.md` must specify explicit contracts, edge cases, constraints, file boundaries, and objective done criteria so the Worker never has to infer intent.
 
 ---
