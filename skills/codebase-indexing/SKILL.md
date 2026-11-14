@@ -39,18 +39,22 @@ Before running any CodeGraph command, verify that the `codegraph` executable is 
 
 ### Check & Initialize vs. Sync
 
-Check if `.codegraph/` exists at the repository root:
+Perform a **two-part check** at the repository root: verify both that the `.codegraph/` directory exists **and** that the SQLite graph database inside it (`.codegraph/codegraph.db`) exists (`[ -d .codegraph ] && [ -s .codegraph/codegraph.db ]`):
 
 - **If `.codegraph/` does NOT exist** — initialize and build the graph database:
   ```bash
   codegraph init
   codegraph index
   ```
-- **If `.codegraph/` already exists** — always run incremental synchronization:
+- **If `.codegraph/` exists, but `.codegraph/codegraph.db` is missing or empty** — the directory alone is not a usable index; build the database (run `codegraph init` first if `.codegraph/` is empty or lacks configuration):
+  ```bash
+  codegraph index
+  ```
+- **If BOTH `.codegraph/` and `.codegraph/codegraph.db` exist** — always run incremental synchronization:
   ```bash
   codegraph sync
   ```
-  Do not re-run `codegraph init` or a full `codegraph index` when `.codegraph/` is already present, unless the database is corrupted or major structural resets require a rebuild.
+  Do not re-run `codegraph init` or a full `codegraph index` when both `.codegraph/` and `.codegraph/codegraph.db` are already present, unless the database is corrupted or major structural resets require a rebuild.
 
 ### Querying CodeGraph
 
