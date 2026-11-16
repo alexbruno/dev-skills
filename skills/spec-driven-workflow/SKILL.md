@@ -54,12 +54,12 @@ Any agent or contributor in **any phase** (`BACKLOG.md`, `SPEC.md`, `PLAN.md`, `
 - **Naming**: Use clear, descriptive filenames (preferably kebab-case, prefixed with the related item/finding ID when applicable, such as `b1-checkout-bug-annotated.png` or `r2-mobile-overflow.png`).
 - **Linking**: Reference attached files from any `workflow/*.md` document using relative Markdown links or image embeds (e.g., `![Annotated checkout bug](./assets/b1-checkout-bug-annotated.png)` or `[Failure log](./assets/test-failure.log)`).
 
-### Version Control (`.gitignore`)
+### Version Control
 
 The `workflow/` directory—including `workflow/assets/` and all subdirectories—contains local process-management and guidance artifacts and **must never be tracked by Git**:
 
 - Check whether `workflow/` is listed in the repository's `.gitignore`; if it is missing, ask the user for confirmation before adding it.
-- Never stage (`git add`) or commit `workflow/` or any files inside it. If `workflow/` is somehow already tracked, warn the user before untrack/cleanup operations.
+- Never stage or commit `workflow/` or any files inside it. If `workflow/` is somehow already tracked, warn the user before untrack/cleanup operations.
 
 ## Artifact Lifecycle
 
