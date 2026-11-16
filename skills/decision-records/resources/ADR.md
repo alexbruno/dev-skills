@@ -2,7 +2,7 @@
 
 - **Status**: Proposed | Accepted | Deprecated | Superseded by [ADR-XXXX](./XXXX-title.md)
 - **Date**: <YYYY-MM-DD>
-- **Related Workflow**: `workflow/SPEC.md` / `workflow/PLAN.md` (if applicable)
+- **Related Workflow**: `workflow/<change-slug>/SPEC.md` / `workflow/<change-slug>/PLAN.md` (if applicable)
 
 ## Context
 

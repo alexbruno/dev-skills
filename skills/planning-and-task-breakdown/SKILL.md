@@ -2,15 +2,15 @@
 name: planning-and-task-breakdown
 description: >-
   Plan execution and break complex work into ordered, verifiable tasks aligned
-  with `spec-driven-workflow` (`workflow/SPEC.md`, `workflow/PLAN.md`, and
-  conditional `workflow/TASKS.md`). Use this skill when translating a
-  specification into a concrete execution plan, scoping large or ambiguous work,
-  mapping dependencies, or preparing parallelizable tasks.
+  with `spec-driven-workflow` (`workflow/<change-slug>/SPEC.md`, `PLAN.md`, and
+  conditional `TASKS.md`). Use this skill when translating a specification into
+  a concrete execution plan, scoping large or ambiguous work, mapping
+  dependencies, or preparing parallelizable tasks.
 ---
 
 # Planning & Task Breakdown
 
-Decompose specifications into clear execution steps (`workflow/PLAN.md`) and, when warranted, small verifiable tasks (`workflow/TASKS.md`) before writing any implementation code.
+Decompose specifications into clear execution steps (`workflow/<change-slug>/PLAN.md`) and, when warranted, small verifiable tasks (`workflow/<change-slug>/TASKS.md`) before writing any implementation code.
 
 > **Language & Architecture Agnostic**: This skill applies to any technology stack, domain, or project structure. Reason in terms of deliverables, boundaries, dependencies, and verification—never assume specific languages, frameworks, or architectural patterns.
 
@@ -20,17 +20,17 @@ Decompose specifications into clear execution steps (`workflow/PLAN.md`) and, wh
 
 ## When to Apply
 
-- Translating `workflow/SPEC.md` into an actionable execution plan (`workflow/PLAN.md`).
+- Translating `workflow/<change-slug>/SPEC.md` into an actionable execution plan (`workflow/<change-slug>/PLAN.md`).
 - Work feels too large, ambiguous, or multi-faceted to execute in a single pass.
 - Multiple independent deliverables or parallel/asynchronous agent executions are possible.
 - Skip formal breakdown for trivial, single-step edits where planning adds no value.
 
 ## Planning Process
 
-### 1. Ground in `workflow/SPEC.md`
+### 1. Ground in `workflow/<change-slug>/SPEC.md`
 
-1. Read `workflow/SPEC.md` (or `workflow/<change-slug>/SPEC.md` for scoped initiatives).
-   - If `SPEC.md` does not exist yet for a non-trivial change, create and align on `SPEC.md` first.
+1. Read `workflow/<change-slug>/SPEC.md`.
+   - If `SPEC.md` does not exist yet for a non-trivial change, create and align on `workflow/<change-slug>/SPEC.md` first.
 2. Confirm goals, non-goals, constraints, and acceptance criteria are unambiguous. Surface open questions before committing to a plan.
 
 ### 2. Explore & Map Dependencies (Read-Only)
@@ -39,18 +39,18 @@ Decompose specifications into clear execution steps (`workflow/PLAN.md`) and, wh
 2. Identify affected components, shared boundaries, and external constraints.
 3. Map the **dependency graph**: determine what blocks what, which steps must run sequentially, and which units are truly independent.
 
-### 3. Author `workflow/PLAN.md`
+### 3. Author `workflow/<change-slug>/PLAN.md`
 
-Create or update `workflow/PLAN.md` (initializing `workflow/` if missing):
+Create or update `workflow/<change-slug>/PLAN.md` (initializing `workflow/<change-slug>/` if missing):
 
 - Reference `SPEC.md` requirements rather than duplicating them.
 - Order steps logically—tackle high-risk or high-uncertainty unknowns early.
 - Define a concrete **Verification Strategy** (automated checks, validations, or manual verification) for each step and for the overall change.
 - Note risks and rollback considerations.
 
-### 4. Shard into `workflow/TASKS.md` (Conditional)
+### 4. Shard into `workflow/<change-slug>/TASKS.md` (Conditional)
 
-Create `workflow/TASKS.md` **only** when at least one `spec-driven-workflow` trigger applies:
+Create `workflow/<change-slug>/TASKS.md` **only** when at least one `spec-driven-workflow` trigger applies:
 
 1. `PLAN.md` is too large or comprehensive to execute cleanly in a single pass.
 2. `PLAN.md` spans two or more distinct scopes, task types (`feature`, `bugfix`, `refactor`, `docs`), or independent deliverables that benefit from separate tracking.
@@ -67,7 +67,7 @@ When creating `TASKS.md`, ensure every task has:
 
 Before handing off `PLAN.md` (and `TASKS.md`) for execution:
 
-1. Every requirement and acceptance criterion in `workflow/SPEC.md` is covered by at least one step or task.
+1. Every requirement and acceptance criterion in `workflow/<change-slug>/SPEC.md` is covered by at least one step or task.
 2. No circular dependencies exist, and parallel tasks have non-overlapping scopes.
 3. Every step/task is small enough to implement and verify in a single focused pass.
 4. No implementation code has been written prematurely during the planning phase.

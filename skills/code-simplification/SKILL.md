@@ -17,13 +17,13 @@ Make code **clean, direct, and easy for humans to read** while preserving exact 
 1. **Preserve Behavior Exactly**: Inputs, outputs, side effects, error semantics, and edge-case guards must remain identical. Existing tests must pass without modification.
 2. **Clarity Over Cleverness (and Over Brevity)**: The goal is human comprehension, not fewer lines. Never replace readable code with cryptic one-liners, nested ternaries, or dense chains.
 3. **Direct Over Indirection**: Do not take three hops to do something simple. Inline trivial single-use wrappers, pass-through helpers, and speculative abstractions that add ceremony without clarity.
-4. **Chesterton's Fence**: Before deleting or rewriting code that looks redundant or defensive, understand *why* it was written (check callers, tests, comments, or `workflow/SPEC.md`).
+4. **Chesterton's Fence**: Before deleting or rewriting code that looks redundant or defensive, understand *why* it was written (check callers, tests, comments, or `workflow/<change-slug>/SPEC.md`).
 
 ## When to Apply
 
 - Right after a feature or bug fix works and tests pass, to clean up rough or over-complicated implementation details.
 - When functions have deep `if/else` nesting, long monolithic blocks, or unclear variable/method names.
-- When `workflow/REVIEW.md` flags readability, maintainability, or over-engineering issues.
+- When `workflow/<change-slug>/REVIEW.md` flags readability, maintainability, or over-engineering issues.
 
 ## What to Simplify
 

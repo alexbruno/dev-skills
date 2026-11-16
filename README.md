@@ -19,7 +19,7 @@ Curated agent skills for AI spec-driven development, sequential reasoning, and p
 | [`npm-version-management`](./skills/npm-version-management/SKILL.md) | Enforce disciplined NPM package versioning via `npm version` CLI, keeping `package.json` synchronized with Git version tags. |
 | [`planning-and-task-breakdown`](./skills/planning-and-task-breakdown/SKILL.md) | Stack-agnostic execution planning and task decomposition aligned with `SPEC.md`, `PLAN.md`, and conditional `TASKS.md`. |
 | [`product-owner`](./skills/product-owner/SKILL.md) | Scrum and Kanban Product Owner role for product backlog/demand framing (`BACKLOG.md`) and delivery value validation (`VALIDATION.md`). |
-| [`spec-driven-workflow`](./skills/spec-driven-workflow/SKILL.md) | Default software engineering workflow using a `workflow/` directory (`SPEC.md`, `PLAN.md`, `TASKS.md`, `REVIEW.md`, and conditional `BACKLOG.md` / `VALIDATION.md`) to frame, specify, plan, execute, review, and validate changes. |
+| [`spec-driven-workflow`](./skills/spec-driven-workflow/SKILL.md) | Default software engineering workflow using `workflow/BACKLOG.md` at the root and scoped `workflow/<change-slug>/` subdirectories (`SPEC.md`, `PLAN.md`, `TASKS.md`, `REVIEW.md`, and conditional `VALIDATION.md`) to frame, specify, plan, execute, review, and validate changes. |
 | [`systematic-debugging`](./skills/systematic-debugging/SKILL.md) | Root-cause analysis, regression testing, and disciplined debugging before applying fixes. |
 | [`verification-and-testing`](./skills/verification-and-testing/SKILL.md) | Evidence-based verification gates and meaningful test coverage aligned with `SPEC.md` acceptance criteria. |
 

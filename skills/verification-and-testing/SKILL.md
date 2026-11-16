@@ -3,8 +3,8 @@ name: verification-and-testing
 description: >-
   Enforce evidence-based verification and meaningful test coverage before
   claiming any task is complete. Use this skill when writing tests, validating
-  `workflow/SPEC.md` acceptance criteria, or verifying builds, linters, and
-  runtime behavior after code changes.
+  `workflow/<change-slug>/SPEC.md` acceptance criteria, or verifying builds,
+  linters, and runtime behavior after code changes.
 ---
 
 # Verification & Testing
@@ -15,9 +15,9 @@ Never claim a change works, passes, or is complete without **fresh, direct verif
 
 **Evidence before completion claims.** If you did not run a check after your last change and observe its output, do not report it as passing.
 
-## 1. Align Verification with `workflow/SPEC.md`
+## 1. Align Verification with `workflow/<change-slug>/SPEC.md`
 
-- Map every acceptance criterion in `workflow/SPEC.md` and the verification strategy in `workflow/PLAN.md` to a concrete check (automated test, build, lint, typecheck, or explicit runtime check).
+- Map every acceptance criterion in `workflow/<change-slug>/SPEC.md` and the verification strategy in `workflow/<change-slug>/PLAN.md` to a concrete check (automated test, build, lint, typecheck, or explicit runtime check).
 - Treat untested acceptance criteria as incomplete work.
 
 ## 2. Write Meaningful Tests
@@ -29,7 +29,7 @@ Never claim a change works, passes, or is complete without **fresh, direct verif
 
 ## 3. Execution Gate After Final Edit
 
-Before handing off work or moving to `workflow/REVIEW.md`:
+Before handing off work or moving to `workflow/<change-slug>/REVIEW.md`:
 
 1. Run the relevant unit/integration tests, linter, typechecker, and build commands.
 2. Confirm **all** executed checks pass with zero skipped or relaxed assertions.

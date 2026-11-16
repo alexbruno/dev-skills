@@ -2,8 +2,9 @@
 name: decision-records
 description: >-
   Document significant technical and architectural decisions as lightweight
-  Architecture Decision Records (ADRs). Use this skill when `workflow/SPEC.md`
-  or `workflow/PLAN.md` introduces a hard-to-reverse choice, cross-cutting
+  Architecture Decision Records (ADRs). Use this skill when
+  `workflow/<change-slug>/SPEC.md` or `workflow/<change-slug>/PLAN.md`
+  introduces a hard-to-reverse choice, cross-cutting
   trade-off, new dependency, or protocol/schema change worth preserving for
   future contributors.
 ---
@@ -20,7 +21,7 @@ Create an ADR when a change involves:
 - A **cross-cutting trade-off** affecting multiple modules, services, or teams.
 - Adding or replacing a core dependency, protocol, storage engine, or integration pattern.
 
-**Skip ADRs** for routine implementation details, local refactorings, or easily reversible choices—those belong in `workflow/PLAN.md` or code comments.
+**Skip ADRs** for routine implementation details, local refactorings, or easily reversible choices—those belong in `workflow/<change-slug>/PLAN.md` or code comments.
 
 ## Storage & Naming
 
@@ -31,6 +32,6 @@ Create an ADR when a change involves:
 
 ## Rules
 
-1. **Link with `workflow/`**: Reference the ADR from `workflow/PLAN.md` (and `workflow/SPEC.md` if applicable) so design context stays connected.
+1. **Link with `workflow/`**: Reference the ADR from `workflow/<change-slug>/PLAN.md` (and `workflow/<change-slug>/SPEC.md` if applicable) so design context stays connected.
 2. **Keep it concise**: Focus on context, decision, alternatives rejected, and consequences—avoid turning an ADR into a tutorial or full specification.
 3. **Immutable history**: Once accepted, do not rewrite an old ADR's intent; if a decision changes later, create a new ADR that marks the previous one as `Superseded by <ADR-XXXX>`.

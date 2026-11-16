@@ -17,7 +17,7 @@ Prioritized list of product evolutions, features, bug reports, and improvements 
 
 ## Active Demand Brief: <ID - Short Title>
 
-> Complete this section when an item is refined to `Ready` for handoff to the Architect (`SPEC.md`).
+> Complete this section when an item is refined to `Ready` for handoff to the Architect (`workflow/<change-slug>/SPEC.md`).
 
 - **Backlog ID**: `<B1>`
 - **Type**: Feature | Bug Fix | Enhancement

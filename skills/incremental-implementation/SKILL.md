@@ -2,9 +2,10 @@
 name: incremental-implementation
 description: >-
   Build features and refactorings in small, verified vertical slices instead of
-  large unverified code dumps. Use this skill when executing `workflow/PLAN.md`
-  or `workflow/TASKS.md`, modifying multiple files, or implementing changes
-  expected to exceed ~100 lines.
+  large unverified code dumps. Use this skill when executing
+  `workflow/<change-slug>/PLAN.md` or `workflow/<change-slug>/TASKS.md`,
+  modifying multiple files, or implementing changes expected to exceed ~100
+  lines.
 ---
 
 # Incremental Implementation
@@ -17,18 +18,18 @@ Deliver changes in **thin, verifiable increments**—one working slice at a time
 
 ## When to Apply
 
-- Executing steps from `workflow/PLAN.md` or tasks from `workflow/TASKS.md`.
+- Executing steps from `workflow/<change-slug>/PLAN.md` or tasks from `workflow/<change-slug>/TASKS.md`.
 - Any change touching two or more files or exceeding ~100 lines of code.
 - Refactoring existing modules where behavior must remain intact at every step.
 
 ## The Increment Loop
 
-For each step in `workflow/PLAN.md` (or task in `workflow/TASKS.md`):
+For each step in `workflow/<change-slug>/PLAN.md` (or task in `workflow/<change-slug>/TASKS.md`):
 
-1. **Scope the Slice**: Pick the smallest cohesive unit that delivers testable progress toward `workflow/SPEC.md`.
+1. **Scope the Slice**: Pick the smallest cohesive unit that delivers testable progress toward `workflow/<change-slug>/SPEC.md`.
 2. **Implement Minimally**: Write only the code required for this slice—avoid speculative scaffolding for future slices.
 3. **Test & Verify Immediately**: Run targeted unit/integration tests, typecheck, and linter to confirm the slice works and introduces no regressions.
-4. **Checkpoint**: Update status in `workflow/PLAN.md` or `workflow/TASKS.md` (e.g., mark `done`), and create a clean commit/checkpoint when appropriate so rollback is effortless.
+4. **Checkpoint**: Update status in `workflow/<change-slug>/PLAN.md` or `workflow/<change-slug>/TASKS.md` (e.g., mark `done`), and create a clean commit/checkpoint when appropriate so rollback is effortless.
 5. **Repeat**: Advance to the next slice only after the current one is green.
 
 ## Slicing Strategies

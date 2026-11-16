@@ -1,6 +1,6 @@
 # Delivery Validation: <Short Title>
 
-- **Backlog**: [BACKLOG.md](./BACKLOG.md)
+- **Backlog**: [BACKLOG.md](../BACKLOG.md)
 - **Spec**: [SPEC.md](./SPEC.md)
 - **Review**: [REVIEW.md](./REVIEW.md)
 - **Prepared By**: <Architect / Lead Engineer>
@@ -32,7 +32,7 @@ Observable user flows, commands, UI paths, or scenarios the Product Owner can ch
 
 - [ ] Delivered behavior matches the product intent and user value in `BACKLOG.md`.
 - [ ] Product acceptance expectations are satisfied.
-- [ ] Ready to close this cycle and reset/archive `workflow/` artifacts (or log follow-ups in `BACKLOG.md`).
+- [ ] Ready to close this cycle and clean up `workflow/<change-slug>/` (while updating `../BACKLOG.md` as needed).
 
 ### Validation Notes / Requested Adjustments
 
@@ -40,4 +40,4 @@ Observable user flows, commands, UI paths, or scenarios the Product Owner can ch
 
 ### Supporting Assets (Optional)
 
-- [<Short description>](./assets/<filename>) — <Validation screenshot, recording, or evidence stored in `workflow/assets/`>
+- [<Short description>](./assets/<filename>) — <Validation screenshot, recording, or evidence stored in `workflow/<change-slug>/assets/`>

@@ -32,4 +32,4 @@ Summarize the chosen architecture, key design decisions, and any trade-offs.
 
 ## Supporting Assets (Optional)
 
-- [<Short description>](./assets/<filename>) — <Architecture diagram, trace, or supporting evidence stored in `workflow/assets/`>
+- [<Short description>](./assets/<filename>) — <Architecture diagram, trace, or supporting evidence stored in `workflow/<change-slug>/assets/`>

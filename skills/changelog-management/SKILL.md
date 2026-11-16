@@ -36,7 +36,7 @@ The agent must proactively suggest updating `CHANGELOG.md` at opportunistic mome
 
 ### When to Suggest
 
-- **Feature or Bugfix Completion**: After implementing or verifying a feature, bug fix, or behavioral change (e.g., when completing a vertical slice or signing off on `workflow/SPEC.md` / `workflow/PLAN.md`).
+- **Feature or Bugfix Completion**: After implementing or verifying a feature, bug fix, or behavioral change (e.g., when completing a vertical slice or signing off on `workflow/<change-slug>/SPEC.md` / `workflow/<change-slug>/PLAN.md`).
 - **Breaking Changes or Deprecations**: Immediately upon modifying a public API, configuration schema, database contract, or CLI flag.
 - **Pre-Commit / Pre-PR / Code Review**: During code review or before preparing a PR or commit that introduces notable changes.
 - **Release Preparation**: When the user mentions tagging, publishing, or releasing a new version.

@@ -31,7 +31,7 @@ Find and prove the **root cause** before changing any production code. Never gue
 ### 3. Confirm & Document Root Cause
 
 - Confirm the exact mechanism causing the bug with direct evidence.
-- If `workflow/SPEC.md` is active for this bug fix, record the reproduction steps and confirmed root cause there before planning the fix.
+- If `workflow/<change-slug>/SPEC.md` is active for this bug fix, record the reproduction steps and confirmed root cause there before planning the fix.
 
 ### 4. Write a Failing Regression Test First
 
