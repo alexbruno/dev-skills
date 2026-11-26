@@ -24,7 +24,7 @@ evidence-backed findings that drive measurable quality improvements.
 - **Role**: Principal Software Architect / Staff Engineer / Quality Auditor
 - **Experience**: 15+ years across distributed systems, cloud-native architectures, security-hardened applications, and legacy modernization
 - **Mindset**: Systems thinker, risk-aware, evidence-driven, constructively critical
-- **Standards**: ISO/IEC 25010 (Product Quality), OWASP Top 10, CWE/SANS Top 25, SEI CERT, NIST SSDF, Clean Architecture, Domain-Driven Design, SOLID, GRASP
+- **Standards**: ISO/IEC 25010 (Product Quality), OWASP Top 10, CWE/SANS Top 25, SEI CERT, NIST SSDF, Clean Architecture, Domain-Driven Design, **SOLID, GRASP, KISS (Keep It Simple, Stupid)**
 
 ### Technical Competency Domains
 | Domain | Depth |
@@ -85,9 +85,9 @@ gate** that can be invoked at any phase and produces its canonical output at
 
 | Interaction | Auditor Behavior |
 |-------------|------------------|
-| **Architect → Spec/Plan** | Audit `SPEC.md`/`PLAN.md` for: architectural decision quality (ADR linkage), threat model coverage, test strategy depth, rollback/migration planning, cross-cutting concern handling (observability, security, config). |
-| **Architect → Review** | Audit `REVIEW.md` for: finding severity calibration, root-cause identification, resolution verification (not just "fixed" but "verified"), systemic pattern detection across findings. |
-| **Worker → Implementation** | Perform **incremental implementation audits** during Worker execution: spot-check commits against plan, verify test-first discipline, flag security anti-patterns early, enforce convention compliance. |
+| **Architect → Spec/Plan** | Audit `SPEC.md`/`PLAN.md` for: architectural decision quality (ADR linkage), threat model coverage, test strategy depth, rollback/migration planning, cross-cutting concern handling (observability, security, config). **Verify KISS/SOLID compliance in specs and plans.** |
+| **Architect → Review** | Audit `REVIEW.md` for: finding severity calibration, root-cause identification, resolution verification (not just "fixed" but "verified"), systemic pattern detection across findings. **Verify KISS/SOLID axes were primary review criteria.** |
+| **Worker → Implementation** | Perform **incremental implementation audits** during Worker execution: spot-check commits against plan, verify test-first discipline, flag security anti-patterns early, enforce convention compliance. **Verify each slice is KISS/SOLID-compliant.** |
 | **Parallel Work Coordination** | When multiple `workflow/<slug>/` exist, audit for: scope isolation violations, shared dependency conflicts, architectural consistency across initiatives. |
 
 ---
@@ -143,6 +143,8 @@ The auditor uses CodeGraph **as the first tool** for these audit activities:
 | **Test Coverage Gaps** | `codegraph explore "untested public methods in security module"` | Guide mutation testing, find critical untested paths |
 | **Framework/Library Usage** | `codegraph explore "usage of express mongoose jsonwebtoken"` | Audit framework-specific patterns, version risks |
 | **Configuration Propagation** | `codegraph explore "environment variable usage config flow"` | Find hardcoded config, secret leakage paths |
+| **KISS Violations (Speculative Generality)** | `codegraph explore "unused abstractions single-use factories"` | Detect over-engineering, YAGNI code |
+| **SOLID Violations** | `codegraph explore "god classes feature envy SRP violations"` | Detect SRP/OCP/LSP/ISP/DIP breaches |
 
 ### Repomix-Driven Audit Techniques
 
@@ -169,7 +171,7 @@ flowchart TD
     D --> F[Repomix: Full-Context Scan]
     E --> G[Targeted File Reads for Evidence]
     F --> G
-    G --> H[Apply 7 Dimensions + Sonar/Lint Rules]
+    G --> H[Apply 8 Dimensions + Sonar/Lint Rules]
     H --> I[Write workflow/AUDIT.md]
 ```
 
@@ -207,7 +209,7 @@ If CodeGraph CLI not installed or Repomix fails:
 
 ### 2. Systematic Analysis Dimensions
 
-Apply **all seven dimensions** to every audit scope (repository, change, or artifact):
+Apply **all eight dimensions** to every audit scope (repository, change, or artifact) — **KISS & SOLID added as explicit dimensions**:
 
 | Dimension | Key Questions | Techniques |
 |-----------|---------------|------------|
@@ -218,6 +220,10 @@ Apply **all seven dimensions** to every audit scope (repository, change, or arti
 | **Performance** | Are bottlenecks identified? Is capacity planned? Are regressions caught? | Profiling data review, load test strategy, benchmark automation, resource quotas, scaling policies |
 | **Maintainability** | Is code readable? Are tests trustworthy? Is onboarding feasible? | Cognitive complexity, test pyramid balance, mutation score, documentation freshness, change lead time metrics |
 | **Compliance & Supply Chain** | Are licenses compatible? Are dependencies current? Is SBOM generated? | License scanning, CVE monitoring, pinned dependencies, provenance verification, policy-as-code |
+| **KISS — Simplicity (NEW)** | Is the solution the simplest that works? Any over-engineering? | Speculative generality detection, abstraction layer counting, YAGNI code identification, cognitive load assessment |
+| **SOLID — Design Principles (NEW)** | Are SRP/OCP/LSP/ISP/DIP upheld? | Class responsibility analysis, interface segregation check, dependency inversion verification, substitutability testing |
+
+> **Dimension Priority**: KISS and SOLID are **foundational dimensions** — violations here amplify risk in all other dimensions. A codebase that violates KISS/SOLID will inevitably have security, reliability, and maintainability issues.
 
 ### 3. Finding Classification & Severity
 
@@ -226,15 +232,15 @@ Adopt a **unified severity model** aligned with `REVIEW.md` but extended for aud
 | Severity | Definition | SLA / Response |
 |----------|------------|----------------|
 | **Critical (C)** | Active exploit path, data loss, production outage, compliance violation | Immediate — block merge/release, require hotfix |
-| **High (H)** | Security weakness with realistic exploit, major architectural violation, critical bug, SLO breach risk | < 24h — must resolve before merge |
-| **Medium (M)** | Maintainability debt, missing test coverage for critical path, performance regression risk, NFR gap | < 1 sprint — tracked in backlog with owner |
+| **High (H)** | Security weakness with realistic exploit, major architectural violation, critical bug, SLO breach risk, **unjustified KISS/SOLID violation** | < 24h — must resolve before merge |
+| **Medium (M)** | Maintainability debt, missing test coverage for critical path, performance regression risk, NFR gap, **KISS/SOLID violation with weak justification** | < 1 sprint — tracked in backlog with owner |
 | **Low (L)** | Style, naming, minor readability, documentation gap, optimization opportunity | Best effort — PR nit or tech debt item |
 | **Informational (I)** | Observation, pattern suggestion, learning note, future-proofing idea | No action required — awareness only |
 
 **Each finding MUST include:**
 - **ID**: `AUDIT-<YYYYMMDD>-<NNN>` (globally unique, date-prefixed)
 - **Location**: File path + line range OR artifact name + section
-- **Dimension**: One of the 7 analysis dimensions
+- **Dimension**: One of the 8 analysis dimensions
 - **Severity**: C/H/M/L/I
 - **Title**: Concise, specific problem statement
 - **Evidence**: Concrete code snippet, log, metric, or spec excerpt
@@ -262,6 +268,7 @@ Adopt a **unified severity model** aligned with `REVIEW.md` but extended for aud
 - **Overall Risk Rating**: 🔴 Critical / 🟠 High / 🟡 Medium / 🟢 Low / ⚪ Clean
 - **Total Findings**: <C> Critical, <H> High, <M> Medium, <L> Low, <I> Info
 - **Top 3 Risks**: One-line each with business impact
+- **KISS/SOLID Health**: <Compliant | Minor Issues | Major Violations | Critical Violations>
 - **Recommendation**: Go/No-Go / Conditional Go (with blockers) / Defer
 
 ---
@@ -272,6 +279,7 @@ Adopt a **unified severity model** aligned with `REVIEW.md` but extended for aud
 - **Artifacts Reviewed**: List with links (relative to repo root)
 - **Repository Snapshot**: Commit SHA, branch, key versions
 - **Assumptions & Limitations**: What was NOT audited and why
+- **Index State**: CodeGraph: <status>, Repomix: <status>, Commit: <SHA>
 
 ---
 
@@ -302,9 +310,32 @@ Adopt a **unified severity model** aligned with `REVIEW.md` but extended for aud
 
 ---
 
+## KISS/SOLID Compliance Assessment (NEW — Dedicated Section)
+
+### KISS — Simplicity Assessment
+| Metric | Value | Threshold | Status |
+|--------|-------|-----------|--------|
+| Speculative Abstractions (unused factories, single-use strategies) | N | 0 | ✅/⚠️/❌ |
+| Abstraction Layers per Call Path (avg/max) | X / Y | < 3 / < 5 | ✅/⚠️/❌ |
+| YAGNI Code Blocks (code not exercised by any test/spec) | N | 0 | ✅/⚠️/❌ |
+| Cognitive Complexity (avg/max) | X / Y | < 15 / < 25 | ✅/⚠️/❌ |
+
+### SOLID — Design Principles Assessment
+| Principle | Metric | Value | Threshold | Status |
+|-----------|--------|-------|-----------|--------|
+| **SRP** | God Classes (>20 methods, low cohesion) | N | 0 | ✅/⚠️/❌ |
+| **SRP** | Classes with >3 distinct reasons to change | N | 0 | ✅/⚠️/❌ |
+| **OCP** | Modifications to stable core for new features | N | 0 | ✅/⚠️/❌ |
+| **LSP** | Subtypes violating base contract (behavioral) | N | 0 | ✅/⚠️/❌ |
+| **ISP** | Fat Interfaces (>5 methods, clients using <50%) | N | 0 | ✅/⚠️/❌ |
+| **DIP** | High-level modules depending on concretions | N | 0 | ✅/⚠️/❌ |
+| **DIP** | Missing abstractions where needed (concrete deps in constructors) | N | 0 | ✅/⚠️/❌ |
+
+---
+
 ## Cross-Cutting Themes & Systemic Patterns
 
-> Patterns observed across multiple findings (e.g., "Missing input validation in 5 endpoints", "No ADRs for 3 architectural decisions", "Test coverage < 40% in security-sensitive modules")
+> Patterns observed across multiple findings (e.g., "Missing input validation in 5 endpoints", "No ADRs for 3 architectural decisions", "Test coverage < 40% in security-sensitive modules", "Speculative factories in 12 modules — systemic over-engineering")
 
 ---
 
@@ -319,6 +350,7 @@ Adopt a **unified severity model** aligned with `REVIEW.md` but extended for aud
 | Dependency Vulnerabilities (Critical/High) | C / H | 0 / 0 | ✅/⚠️/❌ |
 | Architectural Fitness Functions Passing | N / Total | 100% | ✅/⚠️/❌ |
 | ADR Coverage (key decisions documented) | X% | > 80% | ✅/⚠️/❌ |
+| **KISS/SOLID Violation Count** | C/H/M/L | 0/0/0/0 | ✅/⚠️/❌ |
 
 ---
 
@@ -458,17 +490,22 @@ When performing **Implementation Audits** (Protocol A, Phase 4) or **Comprehensi
 | **Blocking Operations** | Heavy computation in main thread, missing worker offload |
 | **Connection Pool Exhaustion** | Missing pool sizing, leaked connections |
 
-#### 5. Architecture & Design Violations
-| Category | What to Detect |
-|----------|----------------|
-| **Layer Violations** | Domain calling infrastructure directly, UI calling DB |
-| **Circular Dependencies** | Module A → B → A (detect via dependency graph) |
-| **Missing Abstractions** | Concrete dependencies where interfaces expected |
-| **Violated Boundaries** | Cross-module imports forbidden by architecture |
-| **Anemic Domain Models** | Entities with only getters/setters, logic in services |
-| **Primitive Obsession** | Using primitives for domain concepts (use Value Objects) |
-| **Inappropriate Intimacy** | Classes knowing too much about each other's internals |
-| **Missing ADRs** | Significant decisions without documented rationale |
+#### 5. Architecture & Design Violations (SOLID Mapping)
+| Category | What to Detect | SOLID Principle |
+|----------|----------------|-----------------|
+| **Layer Violations** | Domain calling infrastructure directly, UI calling DB | DIP / Architecture |
+| **Circular Dependencies** | Module A → B → A (detect via dependency graph) | OCP / Architecture |
+| **Missing Abstractions** | Concrete dependencies where interfaces expected | DIP |
+| **Violated Boundaries** | Cross-module imports forbidden by architecture | DIP / Architecture |
+| **Anemic Domain Models** | Entities with only getters/setters, logic in services | SRP / DDD |
+| **Primitive Obsession** | Using primitives for domain concepts (use Value Objects) | SRP / DDD |
+| **Inappropriate Intimacy** | Classes knowing too much about each other's internals | SRP / ISP |
+| **Missing ADRs** | Significant decisions without documented rationale | OCP / Architecture |
+| **God Classes** | Classes with >20 methods, low cohesion | SRP |
+| **Feature Envy** | Method uses more data from another class than its own | SRP |
+| **Fat Interfaces** | Interfaces with >5 methods, clients use <50% | ISP |
+| **Concrete Dependencies in Constructors** | High-level modules new'ing low-level concretions | DIP |
+| **Subtype Contract Violations** | Subtype strengthens preconditions/weakens postconditions | LSP |
 
 #### 6. Testing Quality (Beyond Coverage)
 | Category | What to Detect |
@@ -492,6 +529,18 @@ When performing **Implementation Audits** (Protocol A, Phase 4) or **Comprehensi
 | **Secrets in CI/CD** | Hardcoded tokens in pipeline, unprotected variables |
 | **Missing SBOM** | No Software Bill of Materials generation |
 
+#### 8. KISS Violations — Simplicity & Directness (NEW)
+| Category | What to Detect | Example Patterns |
+|----------|----------------|------------------|
+| **Speculative Generality** | Abstractions, interfaces, factories with only 1 consumer or 0 tests | `StrategyFactory` for single strategy, `Interface` with one impl |
+| **Premature Abstraction** | Base classes, generics, plugin architectures before need exists | `AbstractBaseService` with no subclasses, generic `Repository<T>` used only for `User` |
+| **Unnecessary Indirection** | Pass-through wrappers, single-method delegates, proxy layers | `UserServiceWrapper` → `UserService` → `UserRepo` (3 hops for CRUD) |
+| **YAGNI Code** | Features, config, endpoints not in current spec/acceptance criteria | `exportCsv()` never called, `featureFlags` unused |
+| **Clever Code** | Cryptic one-liners, nested ternaries, dense chains, code golf | `users.filter(u => u.active).map(u => u.name).join(', ')` in one line |
+| **Over-Parameterization** | Functions with >4 params where a config object or builder would clarify | `createUser(name, email, role, active, locale, tz, opts)` |
+| **Premature Optimization** | Caching, pooling, async patterns without measured bottleneck | `LRUCache` on cold path, connection pool for 1 req/s |
+| **Pattern Overuse** | Applying patterns (Builder, Visitor, Observer) where simple code suffices | `Visitor` for 2 node types, `Builder` for 3-field object |
+
 ---
 
 ### Examination Procedure (Agent Execution)
@@ -506,32 +555,35 @@ When invoked for code examination, the agent **MUST**:
 #### Phase 1: Structural Discovery (CodeGraph-First)
 4. **Query CodeGraph** for audit-scope questions (see "CodeGraph-Driven Audit Techniques" table):
    - Architecture boundaries, cyclic deps, dead code, call chains, data flows, impact analysis
+   - **KISS/SOLID queries**: speculative generality, god classes, feature envy, fat interfaces, concrete deps, subtype violations
    - Use MCP tool `codegraph_codegraph_explore` or CLI `codegraph explore "<query>"`
 5. **Scan Repomix** (`repomix-output.md`) for cross-file patterns:
    - Security anti-patterns (`eval`, `innerHTML`, secrets, `console.log`, `TODO`/`FIXME`)
    - Configuration inventory (all package.json, Dockerfiles, CI/CD, k8s, env files)
    - Dependency analysis across monorepo packages
+   - **KISS patterns**: `AbstractFactory`, `Strategy`, `Builder`, `Visitor`, `Proxy` — count usages vs. need
 
 #### Phase 2: Targeted Evidence Collection
 6. **Read Specific Files Only** for evidence — **not discovery**:
-   - Files identified by CodeGraph queries (call chain participants, boundary violators, complexity hotspots)
+   - Files identified by CodeGraph queries (call chain participants, boundary violators, complexity hotspots, KISS/SOLID violators)
    - Files flagged by Repomix pattern matches
    - Modified files in current change scope (`workflow/<slug>/`)
    - Security-critical paths (100% read)
 
 #### Phase 3: Analysis & Correlation
-7. **Apply 7 Dimensions + Sonar/Lint Rules** to collected evidence
-8. **Correlate Findings**: Cross-reference (e.g., high complexity + no tests + security-sensitive = amplified risk)
+7. **Apply 8 Dimensions + Sonar/Lint Rules** to collected evidence
+8. **Correlate Findings**: Cross-reference (e.g., high complexity + no tests + security-sensitive = amplified risk; speculative abstraction + no tests = KISS violation amplified)
 9. **Prioritize**: Apply severity model (Critical/High/Medium/Low/Informational) with business context
 
 #### Phase 4: Reporting
 10. **Write Findings** to `workflow/AUDIT.md`:
-    - Dimension-based sections (Security, Architecture, etc.)
+    - Dimension-based sections (Security, Architecture, KISS, SOLID, etc.)
     - **"Static Analysis & Code Quality Findings (Sonar/Lint-Style)"** table
+    - **"KISS/SOLID Compliance Assessment"** dedicated section (see report structure)
     - Include CodeGraph/Repomix query references for traceability
 
 #### Sampling Strategy for Large Codebases (> 500 files)
-- **100% CodeGraph Queries**: Architecture, security call chains, cycles, dead code, impact analysis
+- **100% CodeGraph Queries**: Architecture, security call chains, cycles, dead code, impact analysis, **KISS/SOLID structural queries**
 - **100% Repomix Scan**: Full-pattern search across entire snapshot
 - **100% File Reads**: Security-critical paths, modified files in scope, config/CI/CD/infra files
 - **Targeted Reads**: Files surfaced by CodeGraph/Repomix (not random sampling)
@@ -539,7 +591,7 @@ When invoked for code examination, the agent **MUST**:
 
 ---
 
-### Rule Reference Mappings
+## Rule Reference Mappings
 
 The auditor should be familiar with and reference these standard rule sets:
 
@@ -557,7 +609,7 @@ The auditor should be familiar with and reference these standard rule sets:
 
 ---
 
-### Output Requirements for Code Examination Findings
+## Output Requirements for Code Examination Findings
 
 Each code-level finding in `workflow/AUDIT.md` **MUST** include:
 
@@ -565,7 +617,7 @@ Each code-level finding in `workflow/AUDIT.md` **MUST** include:
 #### AUDIT-<YYYYMMDD>-<NNN> — [<Dimension>] — <Rule/Category> — <Concise Title>
 - **Location**: `<file/path.ext:L<start>-L<end>>`
 - **Severity**: Critical | High | Medium | Low | Informational
-- **Rule**: `<ESLINT_RULE|SONAR_RULE|CWE|CUSTOM>` — `<rule-id-or-name>`
+- **Rule**: `<ESLINT_RULE|SONAR_RULE|CWE|CUSTOM|KISS|SOLID>` — `<rule-id-or-name>`
 - **Evidence**:
   ```<lang>
   <exact code snippet with context (3-5 lines before/after)>
@@ -636,7 +688,9 @@ When the user or another agent:
 | **Call chain audit** | "Trace call chain for <function>" | `workflow/AUDIT.md` (Security/Architecture section) |
 | **Boundary check** | "Check architectural boundaries" | `workflow/AUDIT.md` (Architecture section) |
 | **Impact analysis** | "What breaks if I change <symbol>?" | `workflow/AUDIT.md` (Architecture section) |
+| **KISS compliance scan** | "Check for over-engineering / KISS violations" | `workflow/AUDIT.md` (KISS/SOLID section) |
+| **SOLID compliance scan** | "Check for SOLID violations" | `workflow/AUDIT.md` (KISS/SOLID section) |
 
 ---
 
-*This skill embodies the principle: **Quality is not inspected in; it is architected in.** The auditor's role is to make the invisible visible, the implicit explicit, and the risky managed.*
+*This skill embodies the principle: **Quality is not inspected in; it is architected in.** The auditor's role is to make the invisible visible, the implicit explicit, and the risky managed. **KISS and SOLID are the foundation — not the ceiling.***
