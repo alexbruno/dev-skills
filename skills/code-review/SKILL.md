@@ -12,14 +12,14 @@ description: >-
 
 Review code changes against both **engineering quality** and **specification intent**, recording every actionable finding in `workflow/<change-slug>/REVIEW.md`.
 
-**Foundation**: This review skill operates under the **`code-simplification` foundational principles** — **KISS (Keep It Simple, Stupid)** and **SOLID** are the non-negotiable baseline for all review judgments. Every finding should be evaluated through this lens.
+**Foundation**: This review skill operates under the **`code-simplification` foundational principles** — **KISS is the master philosophy**, YAGNI is its enforcement mechanism, and **SOLID is a contextual heuristic for object-oriented design** (see `code-simplification`, the canonical source). Severity is graded by concrete harm, not by principle alone.
 
 ## Review Philosophy
 
 - **Net improvement over perfection**: Approve changes that clearly improve overall code health and satisfy `workflow/<change-slug>/SPEC.md`, even if minor stylistic preferences differ.
 - **Evidence over opinion**: Ground every finding in a concrete file path, line range or symbol, and explain *why* it matters — **citing KISS/SOLID principle violations explicitly when applicable**.
 - **Zero silent passes**: Do not approve or finish work while any `blocker` or `major` finding remains `open`.
-- **KISS/SOLID as Primary Criteria**: Simplicity (KISS) and SOLID compliance are first-class review dimensions, not afterthoughts. Over-engineering, unnecessary abstraction, SRP violations, DIP breaches, etc., are `major` or `blocker` severity.
+- **KISS/SOLID as Primary Criteria**: KISS as primary; SOLID as contextual (where it applies). Both are first-class review dimensions, not afterthoughts. Severity is graded by concrete harm (testability, coupling, change amplification); idiomatic non-OOP code is not penalized for not following SOLID.
 
 ## 1. Load Workflow Context First
 
@@ -40,15 +40,15 @@ Evaluate the diff (e.g., `git diff`, staged changes, or target PR) across all **
 - Are there unnecessary abstractions, indirection layers, speculative factories, or premature optimizations?
 - Can a junior developer understand the code in ~30 seconds?
 - Does every abstraction justify itself with a clear, measurable benefit?
-- **Violations**: Over-engineering, clever one-liners, YAGNI code, speculative generality → `major`/`blocker`
+- **Violations**: Over-engineering, clever one-liners, YAGNI code, speculative generality → severity graded by concrete harm (testability, coupling, change amplification), not automatically `major`/`blocker`
 
-### Axis 2: SOLID — Design Principles Compliance (NEW — Primary)
+### Axis 2: SOLID — Design Principles Compliance (NEW — Contextual)
 - **SRP**: Does each class/module/function have a single, clear responsibility? One reason to change?
 - **OCP**: Can behavior be extended without modifying existing code? Are extension points used instead of modification?
 - **LSP**: Are subtypes safely substitutable for their base types? Do inheritance hierarchies respect behavioral contracts?
 - **ISP**: Are interfaces small and focused? Are clients forced to depend on methods they don't use?
 - **DIP**: Does code depend on abstractions (interfaces/protocols) rather than concretions? Are high-level modules decoupled from low-level details?
-- **Violations**: Each SOLID breach is `major` unless the spec explicitly requires the trade-off with documented justification.
+- **Violations**: A SOLID breach is a finding only where the principle applies (designs using classes/interfaces/module contracts) **and** it causes concrete harm (testability, coupling, change amplification). Severity is graded by that harm, not automatically `major`/`blocker`; idiomatic non-OOP code is not a violation.
 
 ### Axis 3: Correctness & Spec Alignment
 - Does the implementation satisfy every acceptance criterion in `workflow/<change-slug>/SPEC.md`?
@@ -64,7 +64,7 @@ Evaluate the diff (e.g., `git diff`, staged changes, or target PR) across all **
 ### Axis 5: Architecture & Maintainability
 - Does the change follow existing codebase patterns and respect module boundaries?
 - Does it avoid duplicated logic or unnecessary coupling?
-- **SOLID overlap**: Layer violations, circular dependencies, missing abstractions → violations here AND Axis 2.
+- **SOLID overlap**: Layer violations, circular dependencies, missing abstractions when they cause concrete harm → violations here AND Axis 2.
 
 ### Axis 6: Security
 - Is untrusted input validated and sanitized at system boundaries?
@@ -74,22 +74,22 @@ Evaluate the diff (e.g., `git diff`, staged changes, or target PR) across all **
 ### Axis 7: Performance
 - Are there obvious N+1 queries, unbounded loops/fetches, memory leaks, or blocking I/O on hot paths?
 
-> **Axis Priority**: Axes 1 & 2 (KISS & SOLID) are **gatekeeping dimensions** — violations here often indicate systemic design issues that compound over time. Axes 3–7 are compliance/quality dimensions.
+> **Axis Priority**: Axis 1 (KISS) is a gatekeeping dimension; Axis 2 (SOLID) is contextual, not gatekeeping — a SOLID deviation without concrete harm is not a `major`/`blocker`. Axes 3–7 are compliance/quality dimensions.
 
 ## 3. Record Findings in `workflow/<change-slug>/REVIEW.md`
 
 Log every finding in `workflow/<change-slug>/REVIEW.md` using consistent severity tiers and resolution statuses:
 
 - **Severities**:
-  - `blocker`: Must be fixed before completion (broken spec requirement, security flaw, data-loss risk, failing build/tests, **KISS/SOLID violation with no documented justification**).
-  - `major`: Must be addressed before completion (edge-case bug, weak error handling, architectural violation, missing test coverage, **KISS/SOLID violation with weak justification**).
+  - `blocker`: Must be fixed before completion (broken spec requirement, security flaw, data-loss risk, failing build/tests, **KISS/SOLID deviation causing concrete harm with no documented justification**).
+  - `major`: Must be addressed before completion (edge-case bug, weak error handling, architectural violation, missing test coverage, **KISS/SOLID deviation causing concrete harm with weak justification**).
   - `minor`: Optional improvement or nit (naming, minor readability cleanup); never blocks approval.
   - `question`: Clarification needed from the author or implementing agent.
 - **Statuses**: `open` | `resolved` | `wontfix` (with brief rationale).
 
 Each finding entry must include:
 - A unique ID (e.g., `[R1]`, `[Q1]`), exact file path and line/symbol reference, severity, status, **Issue**, and **Action**.
-- **For KISS/SOLID findings**: Explicitly cite the principle (e.g., "SRP violation: `UserService` handles auth, persistence, and notifications — split into `AuthService`, `UserRepository`, `NotificationService`") and the recommended remediation.
+- **For KISS/SOLID findings**: Explicitly cite the principle **and** the concrete harm (e.g., "SRP violation: `UserService` handles auth, persistence, and notifications — split into `AuthService`, `UserRepository`, `NotificationService`") and the recommended remediation.
 
 ## 4. Verification & Sign-Off
 
@@ -107,7 +107,7 @@ Each finding entry must include:
 ```markdown
 #### [R3] — [KISS] — src/services/OrderProcessor.ts:45-78
 - **Severity**: major
-- **Issue**: `OrderProcessor` uses a `StrategyFactory` + `CommandBuilder` + `ExecutorChain` for a simple linear workflow (validate → calculate → persist). Three abstraction layers for ~30 lines of straightforward logic.
+- **Issue**: `OrderProcessor` uses a `StrategyFactory` + `CommandBuilder` + `ExecutorChain` for a simple linear workflow (validate → calculate → persist). Three abstraction layers for ~30 lines of straightforward logic; every change must traverse three layers, amplifying change cost and coupling (concrete harm).
 - **Action**: Inline the workflow into a single `processOrder(order)` function with guard clauses. Remove `StrategyFactory`, `CommandBuilder`, `ExecutorChain`. If extension is needed later, add it then (YAGNI).
 ```
 

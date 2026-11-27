@@ -70,7 +70,7 @@ The Architect governs **what** is built, **how** it is structured, and **whether
    - Apply `code-review` to inspect the Worker's implementation against `workflow/<change-slug>/SPEC.md`, `workflow/<change-slug>/PLAN.md`, and engineering standards — **with KISS and SOLID as primary review criteria**.
    - Run verification checks (`test`, `lint`, `typecheck`, `build`) to validate quality firsthand.
    - Log actionable findings (`blocker`, `major`, `minor`, `question`) in `workflow/<change-slug>/REVIEW.md` and set the review status (`Changes Requested` or `Approved`).
-   - **KISS/SOLID Findings**: Violations of KISS (over-engineering, unnecessary abstraction) or SOLID (SRP/OCP/LSP/ISP/DIP breaches) are `major` or `blocker` severity unless explicitly justified in the spec.
+   - **KISS/SOLID Findings**: KISS (over-engineering) and SOLID findings where they apply are graded by concrete harm (testability, coupling, change amplification); no harm => not major/blocker.
    - Once `REVIEW.md` is `Approved`, if `workflow/BACKLOG.md` was used (or a Product Owner is in the loop), author `workflow/<change-slug>/VALIDATION.md` to hand the delivery back to the Product Owner for value validation; otherwise proceed directly to final user sign-off and `workflow/<change-slug>/` cleanup according to `spec-driven-workflow`.
 
 ### Architect Guardrails
