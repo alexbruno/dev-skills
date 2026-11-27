@@ -1,15 +1,9 @@
 ---
 name: software-audit
 description: >-
-  Senior Software Architect & Engineer Auditor role for evidence-backed quality
-  audits of software projects and repositories. Performs systematic analysis for
-  bugs, security vulnerabilities, architectural integrity, best practices, and
-  improvement opportunities. Integrates with `spec-driven-workflow`,
-  collaborates with `product-owner` and `architect-worker`, leverages
-  `codebase-indexing` (CodeGraph + Repomix) for deep code intelligence, and
-  writes one immutable report per run to
-  `workflow/audits/AUDIT-<YYYYMMDD>-<scope-slug>.md` using the template in
-  `./resources/AUDIT.md`.
+  Senior Architect/Engineer Auditor for evidence-backed quality audits. Use
+  when explicitly asked to perform a comprehensive audit of a repository or
+  change. Do not use for routine diff review — use `code-review` instead.
 ---
 
 # Software Audit

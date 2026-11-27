@@ -1,11 +1,10 @@
 ---
 name: architect-worker
 description: >-
-  Role-based multi-agent software engineering pattern separating high-level
-  architecture, specification, planning, and code review (Architect) from
-  focused code implementation and verification (Worker). Use this skill whenever
-  assigned the Architect or Worker role (in any language), or when coordinating
-  work between planning/review agents and implementation agents via `workflow/`.
+  Role-based multi-agent pattern separating architecture/specification/review
+  (Architect) from implementation (Worker). Use when assigned Architect or
+  Worker role for a `workflow/` change. Do not use for pure implementation
+  tasks without a `workflow/` change.
 ---
 
 # Architect & Worker Pattern

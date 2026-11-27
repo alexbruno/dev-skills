@@ -1,13 +1,10 @@
 ---
 name: product-owner
 description: >-
-  Product Owner role grounded in Scrum and Kanban practices to discover,
-  prioritize, and frame product features, improvements, and bug fixes in
-  `workflow/BACKLOG.md`, and validate final delivery in `workflow/<change-slug>/VALIDATION.md`.
-  Use this skill whenever asked to act as a Product Owner, manage a product
-  backlog, frame business/user requirements before technical specification, or
-  validate delivered value in coordination with `spec-driven-workflow` and
-  `architect-worker`.
+  Product Owner role for managing `workflow/BACKLOG.md` and validating delivery
+  in `workflow/<slug>/VALIDATION.md`. Use when framing requirements before spec
+  or validating value with a backlog/PO in the loop. Do not use when no backlog
+  or Product Owner is in the loop.
 ---
 
 # Product Owner Role

@@ -1,14 +1,10 @@
 ---
 name: spec-driven-workflow
 description: >-
-  Default software engineering workflow using a `workflow/` directory where
-  `workflow/BACKLOG.md` is the only root file and every change lives in its own
-  scoped subdirectory `workflow/<change-slug>/` (`SPEC.md`, `PLAN.md`,
-  `TASKS.md`, `REVIEW.md`, and conditional `VALIDATION.md`). Use this skill as
-  the standard process whenever starting a feature, bug fix, refactoring,
-  architecture change, or code review—to capture product intent, specify
-  requirements, plan execution, coordinate parallel work, track review
-  findings, and validate delivery.
+  Default software engineering workflow using `workflow/` with `BACKLOG.md`
+  root and scoped `workflow/<slug>/` changes. Use when starting a non-trivial
+  feature, fix, refactor, or architecture change in a `workflow/` repo. Do not
+  use for typo-only edits, formatting, or trivial one-file fixes.
 ---
 
 # Spec-Driven Workflow

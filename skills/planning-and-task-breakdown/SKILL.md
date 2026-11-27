@@ -2,10 +2,9 @@
 name: planning-and-task-breakdown
 description: >-
   Plan execution and break complex work into ordered, verifiable tasks aligned
-  with `spec-driven-workflow` (`workflow/<change-slug>/SPEC.md`, `PLAN.md`, and
-  conditional `TASKS.md`). Use this skill when translating a specification into
-  a concrete execution plan, scoping large or ambiguous work, mapping
-  dependencies, or preparing parallelizable tasks.
+  with `spec-driven-workflow`. Use when translating a spec into a concrete
+  plan, scoping ambiguous work, or mapping dependencies. Do not use for tasks
+  already broken down.
 ---
 
 # Planning & Task Breakdown

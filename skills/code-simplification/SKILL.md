@@ -1,11 +1,9 @@
 ---
 name: code-simplification
 description: >-
-  Simplify code for human readability, clarity, and directness without
-  changing behavior. Use this skill after implementing a feature, during
-  refactoring, or when addressing code review feedback—especially when code feels
-  over-engineered, deeply nested, or takes unnecessary detours to do simple
-  things.
+  Simplify code for readability and directness without changing behavior. Use
+  when refactoring, addressing review feedback, or code feels over-engineered.
+  Do not use for adding new behavior.
 ---
 
 # Code Simplification

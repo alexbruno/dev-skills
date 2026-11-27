@@ -1,11 +1,10 @@
 ---
 name: code-review
 description: >-
-  Perform structured, multi-dimensional code reviews aligned with the
-  `spec-driven-workflow` (`workflow/<change-slug>/SPEC.md`, `PLAN.md`,
-  `REVIEW.md`). Use this skill after implementing a feature or bug fix,
-  before merging a PR, or when reviewing changes written by another agent or
-  human.
+  Perform structured, multi-dimensional code reviews aligned with
+  `spec-driven-workflow`. Use after implementing a feature/fix, before merging
+  a PR, or when reviewing another's changes. Do not use for design discussions
+  without code changes.
 ---
 
 # Code Review

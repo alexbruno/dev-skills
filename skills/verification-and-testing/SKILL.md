@@ -2,9 +2,9 @@
 name: verification-and-testing
 description: >-
   Enforce evidence-based verification and meaningful test coverage before
-  claiming any task is complete. Use this skill when writing tests, validating
-  `workflow/<change-slug>/SPEC.md` acceptance criteria, or verifying builds,
-  linters, and runtime behavior after code changes.
+  claiming a task complete. Use when writing tests, validating `SPEC.md`
+  acceptance criteria, or verifying builds/linters/runtime after changes. Do
+  not use for implementation without verification scope.
 ---
 
 # Verification & Testing

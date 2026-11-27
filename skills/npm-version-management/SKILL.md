@@ -1,10 +1,8 @@
 ---
 name: npm-version-management
 description: >-
-  Enforce disciplined NPM package version management strictly via the `npm
-  version` CLI. Prohibit manual edits to the `version` field in `package.json`,
-  detect version drift between `package.json` and Git tags, and provide clear
-  remediation steps to restore synchronization.
+  Enforce disciplined NPM version management via `npm version` CLI. Use when
+  publishing or versioning an NPM package.
 ---
 
 # NPM Version Management

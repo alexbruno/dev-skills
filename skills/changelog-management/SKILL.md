@@ -1,10 +1,9 @@
 ---
 name: changelog-management
 description: >-
-  Maintain and update a standardized root `CHANGELOG.md` following Keep a
-  Changelog and Semantic Versioning. Use this skill to initialize or update
-  changelog entries, categorize changes, prepare release cuts, and proactively
-  prompt the user when notable changes warrant updating the changelog.
+  Maintain a standardized `CHANGELOG.md` per Keep a Changelog and SemVer. Use
+  when updating changelog entries, categorizing changes, or preparing a release
+  cut. Do not use for release notes outside `CHANGELOG.md`.
 ---
 
 # Changelog Management

@@ -1,12 +1,9 @@
 ---
 name: environment-preflight
 description: >-
-  Inspect a project's structure, frameworks, and tech stack, then verify in the
-  user's shell and development environment whether the agent has direct access
-  to the required runtimes, package managers, and CLIs. Use this skill when
-  starting work in a repository, before running builds/tests/toolchains, or when
-  diagnosing missing command-line tools—and notify the user clearly whenever
-  required tools are missing or inaccessible.
+  Inspect a project's structure and verify the environment has required
+  runtimes and tools. Use when starting work in a repository or before running
+  builds/tests. Do not use for code-only tasks without env dependencies.
 ---
 
 # Environment Preflight

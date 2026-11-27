@@ -1,11 +1,9 @@
 ---
 name: incremental-implementation
 description: >-
-  Build features and refactorings in small, verified vertical slices instead of
-  large unverified code dumps. Use this skill when executing
-  `workflow/<change-slug>/PLAN.md` or `workflow/<change-slug>/TASKS.md`,
-  modifying multiple files, or implementing changes expected to exceed ~100
-  lines.
+  Build features and refactorings in small, verified vertical slices. Use when
+  executing `PLAN.md`/`TASKS.md`, modifying multiple files, or changes exceed
+  ~100 lines. Do not use for single-file fixes under ~100 lines.
 ---
 
 # Incremental Implementation
