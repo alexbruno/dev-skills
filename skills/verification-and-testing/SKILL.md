@@ -29,8 +29,27 @@ Never claim a change works, passes, or is complete without **fresh, direct verif
 
 ## 3. Execution Gate After Final Edit
 
+> **Anti-hallucination gate**: If no verification command was executed after the final edit, the status is **`UNVERIFIED`**, not `done`. Do not claim completion without fresh evidence.
+
 Before handing off work or moving to `workflow/<change-slug>/REVIEW.md`:
 
 1. Run the relevant unit/integration tests, linter, typechecker, and build commands.
 2. Confirm **all** executed checks pass with zero skipped or relaxed assertions.
-3. Report the exact scope of what was run (e.g., full suite vs. targeted subset, any environment limitations).
+3. Report the exact scope of what was run **and include the Verification Evidence block (Command / Observed / Not verified) for each check** (see Section 4).
+
+## 4. Verification Evidence Format
+
+Every verification claim must include a structured evidence block with three fields:
+
+| Field | Description |
+|-------|-------------|
+| **Command** | The exact command run (including flags, paths, environment). |
+| **Observed** | The raw result — stdout/stderr snippet, exit code, pass/fail count, coverage number. |
+| **Not verified** | What was not checked (scope limits, environment gaps, manual-only steps). |
+
+**Example**:
+```
+Command: npm test -- --reporter=verbose
+Observed: 42 passed, 0 failed; exit code 0; coverage 87%
+Not verified: E2E tests not run (requires running backend); coverage only for unit tests.
+```

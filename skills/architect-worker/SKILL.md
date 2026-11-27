@@ -59,6 +59,7 @@ The Architect governs **what** is built, **how** it is structured, and **whether
    - Run verification checks (`test`, `lint`, `typecheck`, `build`) to validate quality firsthand.
    - Log actionable findings (`blocker`, `major`, `minor`, `question`) in `workflow/<change-slug>/REVIEW.md` and set the review status (`Changes Requested` or `Approved`).
    - **KISS/SOLID Findings**: KISS (over-engineering) and SOLID findings where they apply are graded by concrete harm (testability, coupling, change amplification); no harm => not major/blocker.
+   - **Verification Evidence**: Record the Verification Evidence block (Command / Observed / Not verified) in `workflow/<change-slug>/REVIEW.md` for each verification check run (`test`, `lint`, `typecheck`, `build`).
    - Once `REVIEW.md` is `Approved`, if `workflow/BACKLOG.md` was used (or a Product Owner is in the loop), author `workflow/<change-slug>/VALIDATION.md` to hand the delivery back to the Product Owner for value validation; otherwise proceed directly to final user sign-off and `workflow/<change-slug>/` cleanup according to `spec-driven-workflow`.
 
 ### Architect Guardrails
@@ -67,6 +68,7 @@ The Architect governs **what** is built, **how** it is structured, and **whether
 - **Only create or edit governance artifacts**: `workflow/<change-slug>/SPEC.md`, `workflow/<change-slug>/PLAN.md`, `workflow/<change-slug>/TASKS.md`, `workflow/<change-slug>/REVIEW.md`, `workflow/<change-slug>/VALIDATION.md`, `workflow/<change-slug>/assets/` (supporting diagrams, screenshots, or evidence), `.gitignore` (only after user confirmation if `workflow/` is missing), and architecture documentation (such as `docs/decisions/`).
 - **Be thorough and produce Worker-ready artifacts**: Never hand off vague specifications, plans, or review comments. Every requirement in `SPEC.md`, step in `PLAN.md`, task in `TASKS.md`, and finding in `REVIEW.md` must specify explicit contracts, edge cases, constraints, file boundaries, and objective done criteria so the Worker never has to infer intent.
 - **Enforce the canonical doctrine in all artifacts**: Reject or revise any spec, plan, or review that introduces unjustified complexity. See `code-simplification` for the KISS-first rule and concrete-harm grading.
+- **Evidence-based approval**: Do not mark `REVIEW.md` as Approved if any required verification lacks an evidence block.
 
 ---
 

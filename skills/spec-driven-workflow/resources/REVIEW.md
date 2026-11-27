@@ -34,3 +34,13 @@ Brief overall assessment of correctness, spec alignment, maintainability, and te
 
 - **[Q1]** `path/to/file.ext` — **Status**: `open`
   - **Question**: Clarification needed from the author/implementer.
+
+## Verification Evidence
+
+Every verification check must include an evidence block:
+
+| Check | Command | Observed | Not Verified |
+|-------|---------|----------|--------------|
+| <check name> | <exact command> | <result/count/exit code> | <scope limits> |
+
+**Missing evidence blocks approval.** If a required check has no Command/Observed entry, the review cannot be `Approved`.
