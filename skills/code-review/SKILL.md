@@ -31,9 +31,9 @@ Before inspecting the diff, read the active `workflow/<change-slug>/` artifacts:
 
 If `workflow/<change-slug>/REVIEW.md` does not exist yet, create it (using the `spec-driven-workflow` `REVIEW.md` template if installed).
 
-## 2. Six-Axis Review Framework
+## 2. Seven-Axis Review Framework
 
-Evaluate the diff (e.g., `git diff`, staged changes, or target PR) across all **six** dimensions — **KISS & SOLID added as explicit axes**:
+Evaluate the diff (e.g., `git diff`, staged changes, or target PR) across all **seven** dimensions — **KISS & SOLID added as explicit axes**:
 
 ### Axis 1: KISS — Simplicity & Directness (NEW — Primary)
 - Is this the **simplest thing that could possibly work**?

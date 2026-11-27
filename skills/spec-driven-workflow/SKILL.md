@@ -36,6 +36,8 @@ Keep **`workflow/BACKLOG.md` as the only file at the `workflow/` root**. Always 
 ```text
 workflow/
 ├── BACKLOG.md                # Optional: Only file at workflow/ root (Product Owner backlog & Ready briefs)
+├── audits/                   # Optional: Immutable audit reports, one file per run (named by Audit ID)
+│   └── AUDIT-<YYYYMMDD>-<scope-slug>.md
 ├── assets/                   # Optional: Backlog-level screenshots, mockups, or supporting evidence
 └── <change-slug>/            # Required per non-trivial change (e.g., b1-checkout-fix, user-auth)
     ├── assets/               # Optional: Change-specific screenshots, diagrams, logs, and evidence
@@ -46,6 +48,7 @@ workflow/
     └── VALIDATION.md         # Optional: Architect-to-PO delivery handoff and value sign-off
 ```
 
+- **Audit reports (`workflow/audits/`)**: the `software-audit` skill writes one immutable report per audit run to `workflow/audits/AUDIT-<YYYYMMDD>-<scope-slug>.md` (e.g., `workflow/audits/AUDIT-20261127-full-repo.md`), where the filename is the same `Audit ID` recorded in the report header. Existing reports are never edited or deleted; `workflow/audits/` is a subdirectory, so `BACKLOG.md` remains the only file at the `workflow/` root.
 - **Why `<change-slug>/` is mandatory**: Isolating every initiative in its own `workflow/<change-slug>/` directory allows multiple agents to work in parallel on different plans (as long as their code scopes do not conflict), and allows an Architect to specify and plan upcoming items in `workflow/<slug-b>/` while a Worker implements an already-approved plan in `workflow/<slug-a>/`.
 - **Never place `SPEC.md`, `PLAN.md`, `TASKS.md`, `REVIEW.md`, or `VALIDATION.md` directly in `workflow/` root.**
 

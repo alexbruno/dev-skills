@@ -13,6 +13,8 @@ Maintain a dual indexing setup and **use these indexed artifacts as your primary
 - **CodeGraph** (`.codegraph/`) as the primary source for structural symbol lookup, call paths, and dependency graphs.
 - **Repomix** (`repomix-output.md`) as the primary single-file Markdown snapshot of the repository's layout and implementation.
 
+> **Local index rule**: both indexes are **local, persistent working artifacts**. Keep them on disk (never delete them during cleanup), but **do not version them**. CodeGraph creates `.codegraph/.gitignore` by default (keep that behavior), and the Repomix output should be added to the project's `.gitignore`. In a distributed team, different developers, IDEs, agents, and branches would otherwise produce constant merge conflicts over generated indexes.
+
 Always check whether each index already exists before running commands: **initialize** when missing, and **sync/update** when present.
 
 ## 1. CodeGraph
@@ -58,10 +60,23 @@ Perform a **two-part check** at the repository root: verify both that the `.code
 
 ### Querying CodeGraph
 
-Reach for CodeGraph before running brute-force `grep`/`find` across the codebase:
+Reach for CodeGraph before running brute-force `grep`/`find` across the codebase.
 
-- **MCP tool** (when available): call `codegraph_explore` with symbol names, file paths, or architectural questions.
-- **CLI**: run `codegraph explore "<symbol names or question>"`.
+**CLI (preferred, always portable when the binary is installed):**
+
+```bash
+codegraph explore "<symbol names, file paths, or architectural question>"
+```
+
+**MCP tool (when the agent exposes it):** the exposed name depends on the agent/harness, so **discover it instead of hardcoding one name**.
+
+| Agent / Harness | Typical exposed name |
+| :--- | :--- |
+| **OpenCode** | `codegraph_codegraph_explore` — server key + tool name (`<server>_<tool>`) |
+| **Claude Code** | `mcp__codegraph__codegraph_explore` — `mcp__<server>__<tool>` (may be `mcp__codegraph__explore` if the server registers the tool as `explore`) |
+| **Other MCP clients** | Any tool whose name contains `codegraph` and `explore` (e.g., `*codegraph*explore*`) |
+
+**Discovery rule**: list the tools available in the current agent and pick the match for CodeGraph exploration. If none is exposed, or you are unsure, **fall back to the CLI** (`codegraph explore`) rather than concluding that CodeGraph is unavailable. Never call a hardcoded MCP tool name that the current agent does not expose.
 
 ## 2. Repomix (Markdown Priority)
 
@@ -84,5 +99,5 @@ Check if a Repomix Markdown file (e.g., `repomix-output.md`, or the output path 
 ## 3. Maintenance & Verification
 
 1. **Keep indexes fresh**: Run `codegraph sync` and update the Repomix Markdown file after significant code changes, branch switches, or merges.
-2. **Respect repository hygiene**: Check `.gitignore` before committing generated `.codegraph/` or `repomix-output.md` artifacts—ignore them unless the project explicitly tracks them in version control.
+2. **Keep indexes local but persistent**: `.codegraph/` and the Repomix output are local code-intelligence artifacts. Never delete them during cleanup, but do not version them. Respect CodeGraph's generated `.codegraph/.gitignore` (it ignores the database and transient files), and add the Repomix output (e.g., `repomix-output.md`) to the project's `.gitignore` — ask the user for confirmation before editing `.gitignore` if the entry is missing. Rationale: distributed teams on different branches, IDEs, and agents would otherwise fight merge conflicts over generated indexes.
 3. **Verify**: Confirm `.codegraph/` responds to `codegraph explore` and `repomix-output.md` (or the configured `.md` file) reflects the latest file tree.

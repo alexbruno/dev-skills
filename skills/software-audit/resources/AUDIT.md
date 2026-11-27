@@ -1,5 +1,6 @@
 # Software Audit Report
 
+> **File**: `workflow/audits/AUDIT-<YYYYMMDD>-<scope-slug>.md` (one immutable file per audit run)
 > **Project**: <repo name>
 > **Audit ID**: AUDIT-<YYYYMMDD>-<scope-slug>
 > **Auditor**: <agent/human identifier>
