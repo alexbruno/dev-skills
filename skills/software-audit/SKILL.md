@@ -104,8 +104,7 @@ merge conflicts in distributed teams with different branches, IDEs, and agents.
    (`indexed | stale — synced | N/A — no supported source`), Repomix
    (`updated | stale — refreshed | missing — created`), and the commit SHA.
 
-If `codegraph init` reports **no supported source files** (e.g., a docs-only
-repo), mark CodeGraph `N/A`, use Repomix or plain file reads, and document why.
+**Docs-only / no-supported-source detection**: follow the pre-check and fallback logic in `codebase-indexing` (the canonical rule). If `codebase-indexing` marks CodeGraph `N/A`, document the index state as `CodeGraph: N/A — no supported source` in the report's Context & Scope, and use Repomix/plain reads.
 
 ### Query Patterns
 

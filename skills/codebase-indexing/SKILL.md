@@ -17,6 +17,16 @@ Maintain a dual indexing setup and **use these indexed artifacts as your primary
 
 Always check whether each index already exists before running commands: **initialize** when missing, and **sync/update** when present.
 
+## 0. Docs-Only / No-Supported-Source Mode
+
+Before running any CodeGraph command, run a lightweight pre-check: glob for known source extensions (e.g. `*.ts, *.js, *.py, *.go, *.rs, *.java, *.cs, *.php, *.rb`) and common manifest files (`package.json`, `go.mod`, `Cargo.toml`, `pyproject.toml`, `pom.xml`) at the repository root, excluding `node_modules/`, `.git/`, `dist/`, `build/`, `vendor/`, `.codegraph/`.
+
+- **No candidate source files found** → the repo is docs-only. Skip CodeGraph entirely, mark CodeGraph `N/A`, and proceed to `## 2. Repomix`. Repomix is the primary index in docs-only mode.
+- **Candidates exist but uncertain** → proceed to `## 1. CodeGraph` Pre-flight Check and run `codegraph init`. If it reports "No supported source files found" (or equivalent), mark CodeGraph `N/A`, skip `codegraph index`, and proceed to `## 2. Repomix`.
+- **`codegraph init` succeeds** → continue with the normal Check & Initialize vs. Sync flow (`## 1. CodeGraph`).
+
+**Persistent index policy (always)**: an existing `.codegraph/` is never deleted. If `.codegraph/` exists from a prior run (e.g., the repo later gains source files), it is preserved and `codegraph sync` is attempted.
+
 ## 1. CodeGraph
 
 ### Pre-flight Check
