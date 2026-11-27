@@ -48,3 +48,5 @@ Find and prove the **root cause** before changing any production code. Never gue
 - **Shotgun debugging**: Changing multiple unrelated things at once hoping one works.
 - **Symptom masking**: Catching and ignoring exceptions, adding arbitrary retries/sleeps, or loosening assertions to pass tests.
 - **Speculative fixes**: Editing code before you can explain *why* it failed.
+
+> **Recurring error classes**: if the root cause is a recurring agent error class (same API/command/check/convention), follow `error-to-guardrail` to add the cheapest deterministic guardrail.
