@@ -39,7 +39,7 @@ Before running any CodeGraph command, verify that the `codegraph` executable is 
     1. Check npm registry: `npm view @colbymchenry/codegraph` — confirm package exists, note latest version.
     2. Verify maintainer: `npm view @colbymchenry/codegraph maintainers` — must be `@colbymchenry` (Colby McHenry).
     3. Verify repository: `npm view @colbymchenry/codegraph repository.url` — must point to `github.com/colbymchenry/codegraph` (or expected source).
-    4. Check downloads: `npm view @colbymchenry/codegraph downloads` — weekly downloads should be reasonable (not a typo-squat).
+    4. Check downloads: `curl -s "https://api.npmjs.org/downloads/point/last-week/@colbymchenry/codegraph" | jq -r .downloads` — weekly downloads should be reasonable (not a typo-squat). Requires `curl` and `jq`.
     5. Optional: run `npm audit @colbymchenry/codegraph` for known vulnerabilities.
   - **If verification FAILS** (package missing, maintainer mismatch, suspicious repo/downloads):
     - **Do not install**. Warn the user with the specific failure reason.
@@ -63,11 +63,11 @@ Before running any CodeGraph command, verify that the `codegraph` executable is 
       ```bash
       npx -y @colbymchenry/codegraph@${CODEGRAPH_VERSION} install
       ```
-    - Initialize and index the project:
-      ```bash
-      codegraph init
-      codegraph index
-      ```
+    - Initialize and index (use the command matching your install method):
+      - **Global** (if justified): `codegraph init` / `codegraph index`
+      - **One-off (npx)**: `npx -y @colbymchenry/codegraph@${CODEGRAPH_VERSION} init` / `npx -y @colbymchenry/codegraph@${CODEGRAPH_VERSION} index`
+      - **Project-local**: `npx codegraph init` / `npx codegraph index`
+    - **Note**: Ensure the init/index command matches your install method. For global installs, `codegraph` must be on PATH.
   - Do not silently ignore the missing binary; continue with Repomix (if available) and note that CodeGraph remains unindexed until installed.
 
 ### Check & Initialize vs. Sync
