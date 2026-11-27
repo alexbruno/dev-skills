@@ -2,12 +2,14 @@
 
 > Applies to every `skills/<name>/SKILL.md` and its `resources/`.
 > This is a repository standard, not an agent skill. It is enforced by the
-> structural validator (B1a) and referenced by `spec-driven-workflow`.
+> structural validator (B1a) and will be referenced by `spec-driven-workflow` (B5).
 
 ## 1. One Skill, One Job
 
 - A skill owns exactly one responsibility.
-- If the description needs "and" to explain the job, split the skill.
+- If the description joins two **unrelated** jobs, split the skill. A single job
+  may legitimately contain "and": "readability, clarity, and directness" is one
+  responsibility; "author skills and run audits" is two.
 - If two triggers produce different workflows, split.
 - Resources belong to their skill; they are not separate skills.
 
@@ -41,8 +43,11 @@ Rules:
   on demand.
 - If a skill exceeds the cap, move content to `resources/` or split the skill.
 
-> **Known exception**: `software-audit` (263 lines) is the only skill above the
-> cap. B5 removes its duplicated KISS/SOLID block and brings it under 250.
+> **Known exceptions**: `software-audit` (263 lines) is above the 250 hard cap;
+> B5 moves its *Nine Dimensions* section to `resources/audit-dimensions.md`,
+> bringing it under 250. `npm-version-management` (220) and
+> `spec-driven-workflow` (156) are above the 150 target; B12 compacts npm, and
+> `spec-driven-workflow` is a documented warning.
 
 ## 4. Structure
 
@@ -59,8 +64,10 @@ Use the sections that fit the skill; omit empty ones.
 ## 5. Reference, Don't Repeat
 
 - Define a concept **once**, in its canonical skill.
-- Other skills point to it by name: "Apply the KISS/SOLID heuristics in
-  `code-simplification`."
+- Other skills point to it using the canonical vocabulary approved in B3:
+  "Apply the KISS-first doctrine in `code-simplification`: KISS is the master
+  philosophy, SOLID is a contextual heuristic for object-oriented design, and
+  KISS/YAGNI win ties."
 - Do not restate the five SOLID principles, the same checklist, or the same
   table in multiple skills.
 - Use backticks for skill names and relative links for resources.
@@ -96,11 +103,16 @@ The B1a validator codifies these checks:
 
 - [ ] `name` matches the directory.
 - [ ] `description` is present, English, and within the length limit.
-- [ ] All relative links resolve.
+- [ ] All relative links resolve. The checker ignores template placeholders
+  (`<...>`, `XXXX-*`) and context-relative examples.
 - [ ] `SKILL.md` is ≤ 150 lines (warn) and ≤ 250 (fail).
-- [ ] The canonical doctrine is defined once (no duplicated KISS/SOLID blocks).
+- [ ] A non-canonical skill does **not** define two or more of
+  `SRP/OCP/LSP/ISP/DIP` or restate a principle's definition; pointers to
+  `code-simplification` are allowed and expected.
+- [ ] Documented counts match reality (e.g., 15 skills, nine dimensions).
 - [ ] No secrets, absolute local paths, or proprietary references.
-- [ ] The skill follows the section structure above.
+- [ ] The skill has a purpose paragraph, a "When to use" section, and a
+  verification/output section. The rest of §4 is advisory.
 
 ## 10. Anti-Patterns
 
@@ -111,6 +123,7 @@ The B1a validator codifies these checks:
 | 500-line `SKILL.md` | Context bloat | Move to `resources/` |
 | Broad description | Over-triggering | Concrete trigger + negative trigger |
 | Absolute claims | False authority | Evidence or "often" |
+| Unverified cross-reference | Credibility | Verify it or mark it as future work |
 | Credential list | Tokens without behavior | Operational standards only |
 
 ## 11. Definition of Done
