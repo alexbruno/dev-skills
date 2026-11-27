@@ -35,18 +35,39 @@ Before running any CodeGraph command, verify that the `codegraph` executable is 
 
 - **If `codegraph` is NOT installed**:
   - **Alert the user immediately** that CodeGraph indexing cannot be executed because the `codegraph` executable is missing from the environment.
-  - Provide clear installation and setup instructions:
-    ```bash
-    # Install globally via npm (or run `npx @colbymchenry/codegraph` for interactive setup)
-    npm install -g @colbymchenry/codegraph
-
-    # Optional: configure MCP / AI agent integration
-    codegraph install
-
-    # Initialize and index the project
-    codegraph init
-    codegraph index
-    ```
+  - **Provenance verification (required before any install)**:
+    1. Check npm registry: `npm view @colbymchenry/codegraph` — confirm package exists, note latest version.
+    2. Verify maintainer: `npm view @colbymchenry/codegraph maintainers` — must be `@colbymchenry` (Colby McHenry).
+    3. Verify repository: `npm view @colbymchenry/codegraph repository.url` — must point to `github.com/colbymchenry/codegraph` (or expected source).
+    4. Check downloads: `npm view @colbymchenry/codegraph downloads` — weekly downloads should be reasonable (not a typo-squat).
+    5. Optional: run `npm audit @colbymchenry/codegraph` for known vulnerabilities.
+  - **If verification FAILS** (package missing, maintainer mismatch, suspicious repo/downloads):
+    - **Do not install**. Warn the user with the specific failure reason.
+    - Continue with Repomix/plain reads. Mark CodeGraph `N/A` until resolved.
+  - **If verification PASSES**:
+    - Record the verified version: `CODEGRAPH_VERSION="<version>"` (e.g., `1.2.3`).
+    - Document in skill: `> Verified: @colbymchenry/codegraph@<version> from npm registry, maintainer @colbymchenry, repo github.com/colbymchenry/codegraph, checked on <YYYY-MM-DD>.`
+    - **Preferred install path** (choose one):
+      - **One-off / no project lock-in**: `npx -y @colbymchenry/codegraph@${CODEGRAPH_VERSION}`
+      - **Project-local** (recommended for repos using CodeGraph regularly):
+        ```bash
+        npm install --save-dev @colbymchenry/codegraph@${CODEGRAPH_VERSION}
+        # then use: npx codegraph
+        ```
+      - **Global fallback ONLY with justification**: if the user explicitly needs global availability (multiple projects, CI without `npx`):
+        ```bash
+        npm install -g @colbymchenry/codegraph@${CODEGRAPH_VERSION}
+        # Justification: <user-provided reason>
+        ```
+    - Optional: configure MCP / AI agent integration with pinned version:
+      ```bash
+      npx -y @colbymchenry/codegraph@${CODEGRAPH_VERSION} install
+      ```
+    - Initialize and index the project:
+      ```bash
+      codegraph init
+      codegraph index
+      ```
   - Do not silently ignore the missing binary; continue with Repomix (if available) and note that CodeGraph remains unindexed until installed.
 
 ### Check & Initialize vs. Sync
