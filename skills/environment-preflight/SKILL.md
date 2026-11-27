@@ -59,3 +59,5 @@ Categorize each required tool into one of three states:
 
 - Run this preflight once when entering an unfamiliar project or starting a new toolchain-dependent task; do not repeat identical probes on every step.
 - Re-probe only when switching to a different subproject/stack or after the user confirms they installed or fixed a tool.
+
+> **Unfamiliar stack**: if the project uses a language/framework/runtime you don't know idiomatically, follow `unfamiliar-stack-onboarding` to learn the local conventions before writing abstractions.
