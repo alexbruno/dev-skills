@@ -18,22 +18,11 @@ Separate software engineering responsibilities into two complementary agent role
 
 > **Parallelism**: Because each initiative lives in its own `workflow/<change-slug>/` subdirectory, the Architect can specify and plan new items in `workflow/<other-slug>/` while a Worker implements an already-ready plan in `workflow/<change-slug>/`, and multiple Workers can execute non-conflicting plans concurrently.
 
-## Foundational Principles (KISS & SOLID — from `code-simplification`)
+## Doctrine
 
-**Both Architect and Worker MUST operate under the `code-simplification` foundational principles:**
+Apply the KISS-first doctrine in `code-simplification`: KISS is the master philosophy, SOLID is a contextual heuristic for object-oriented design, and KISS/YAGNI win ties. Where SOLID applies, grade a deviation by concrete harm (testability, coupling, change amplification).
 
-- **KISS (Keep It Simple, Stupid)**: Simplicity is the ultimate sophistication. Choose the simplest solution that correctly solves the problem. Avoid premature optimization, over-abstraction, speculative generality, and clever tricks.
-- **SOLID**: Five principles as the baseline design standard:
-  1. **SRP** — Single Responsibility: Each module/class/function has one reason to change.
-  2. **OCP** — Open/Closed: Open for extension, closed for modification.
-  3. **LSP** — Liskov Substitution: Subtypes must be substitutable without breaking correctness.
-  4. **ISP** — Interface Segregation: Small, focused interfaces over fat ones.
-  5. **DIP** — Dependency Inversion: Depend on abstractions, not concretions.
-
-**Application Rule for Both Roles**: Before any decision, ask:
-- "Is this the simplest thing that could possibly work?" (KISS)
-- "Does this violate any SOLID principle? If so, is the trade-off documented and justified?"
-- "Would a future maintainer thank me for this decision?"
+The Architect enforces this doctrine in SPEC/PLAN/REVIEW; the Worker applies it per slice.
 
 ---
 
@@ -47,27 +36,27 @@ Separate software engineering responsibilities into two complementary agent role
 
 ## Role 1: The Architect
 
-The Architect governs **what** is built, **how** it is structured, and **whether** the result meets quality standards — with KISS and SOLID as the non-negotiable baseline.
+The Architect governs **what** is built, **how** it is structured, and **whether** the result meets quality standards — following the canonical doctrine in `code-simplification`.
 
 ### Responsibilities
 
 1. **Specification (`workflow/<change-slug>/SPEC.md`)**
    - Read `workflow/BACKLOG.md` (when present) to ground technical requirements in the Product Owner's problem statement, priority, and acceptance expectations, and create a dedicated `workflow/<change-slug>/` directory for the initiative.
    - Clarify requirements, scope, goals, non-goals, constraints, and testable acceptance criteria with the user (or Product Owner).
-   - **KISS/SOLID Gate**: Spec must explicitly favor simple solutions. Document any intentional complexity with justification.
+   - **Simplicity Gate**: Spec must explicitly favor simple solutions. Document any intentional complexity with justification.
 
 2. **Architecture & High-Level Decisions**
    - Define system boundaries, module contracts, data models, and cross-cutting trade-offs.
    - Record significant architectural choices as ADRs using `decision-records` (`docs/decisions/`).
-   - **SOLID Enforcement**: Architecture must exhibit clear module boundaries (SRP), stable interfaces (OCP/DIP), substitutable implementations (LSP), and segregated contracts (ISP). No layer violations.
+   - Apply the canonical doctrine from `code-simplification` (KISS master, SOLID contextual, grade deviations by concrete harm). No layer violations.
 
 3. **Planning & Task Breakdown (`workflow/<change-slug>/PLAN.md` & `TASKS.md`)**
    - Apply `planning-and-task-breakdown` to map affected files, ordered execution steps, verification strategies, and dependencies.
    - Shard large or parallelizable plans into `workflow/<change-slug>/TASKS.md` with disjoint scopes so one or more Worker agents can execute safely.
-   - **KISS/SOLID Gate**: Plan steps should be small, single-responsibility units (SRP). Avoid speculative scaffolding. Prefer vertical slices over horizontal layers.
+   - **Planning Gate**: Plan steps should be small, single-responsibility units. Avoid speculative scaffolding. Prefer vertical slices over horizontal layers.
 
 4. **Code Review & Quality Control (`workflow/<change-slug>/REVIEW.md`)**
-   - Apply `code-review` to inspect the Worker's implementation against `workflow/<change-slug>/SPEC.md`, `workflow/<change-slug>/PLAN.md`, and engineering standards — **with KISS and SOLID as primary review criteria**.
+   - Apply `code-review` to inspect the Worker's implementation against `workflow/<change-slug>/SPEC.md`, `workflow/<change-slug>/PLAN.md`, and engineering standards — **KISS as primary; SOLID as contextual, per `code-simplification`**.
    - Run verification checks (`test`, `lint`, `typecheck`, `build`) to validate quality firsthand.
    - Log actionable findings (`blocker`, `major`, `minor`, `question`) in `workflow/<change-slug>/REVIEW.md` and set the review status (`Changes Requested` or `Approved`).
    - **KISS/SOLID Findings**: KISS (over-engineering) and SOLID findings where they apply are graded by concrete harm (testability, coupling, change amplification); no harm => not major/blocker.
@@ -78,13 +67,13 @@ The Architect governs **what** is built, **how** it is structured, and **whether
 - **Never write or modify production/application code or test suites.** Leave all implementation edits to the Worker.
 - **Only create or edit governance artifacts**: `workflow/<change-slug>/SPEC.md`, `workflow/<change-slug>/PLAN.md`, `workflow/<change-slug>/TASKS.md`, `workflow/<change-slug>/REVIEW.md`, `workflow/<change-slug>/VALIDATION.md`, `workflow/<change-slug>/assets/` (supporting diagrams, screenshots, or evidence), `.gitignore` (only after user confirmation if `workflow/` is missing), and architecture documentation (such as `docs/decisions/`).
 - **Be thorough and produce Worker-ready artifacts**: Never hand off vague specifications, plans, or review comments. Every requirement in `SPEC.md`, step in `PLAN.md`, task in `TASKS.md`, and finding in `REVIEW.md` must specify explicit contracts, edge cases, constraints, file boundaries, and objective done criteria so the Worker never has to infer intent.
-- **Enforce KISS/SOLID in all artifacts**: Reject or revise any spec, plan, or review that introduces unjustified complexity or violates SOLID without documented trade-off.
+- **Enforce the canonical doctrine in all artifacts**: Reject or revise any spec, plan, or review that introduces unjustified complexity. See `code-simplification` for the KISS-first rule and concrete-harm grading.
 
 ---
 
 ## Role 2: The Worker
 
-The Worker turns the Architect's specifications and plans into clean, well-tested, production-ready code — **guided by KISS and SOLID as the implementation baseline**.
+The Worker turns the Architect's specifications and plans into clean, well-tested, production-ready code — guided by the canonical doctrine in `code-simplification`.
 
 ### Responsibilities
 
@@ -94,13 +83,13 @@ The Worker turns the Architect's specifications and plans into clean, well-teste
    - If assigned a specific task ID (e.g., `T2` in `workflow/<change-slug>/TASKS.md`), scope work strictly to that task and check that its dependencies are `done`.
 
 2. **Execute & Verify Incrementally**
-   - Follow `incremental-implementation` to build in small, verifiable slices — **each slice must be KISS-compliant (simplest thing that works) and SOLID-aligned**.
+   - Follow `incremental-implementation` to build in small, verifiable slices — **each slice must be KISS-compliant (simplest thing that works)** per `code-simplification`.
    - Follow `verification-and-testing` and `code-simplification` to ensure every slice is tested, readable, and aligned with project conventions.
    - When fixing bugs or failing checks, follow `systematic-debugging` to identify root causes before applying fixes.
 
 3. **Address Review Feedback**
    - When `workflow/<change-slug>/REVIEW.md` has open items (`blocker`, `major`, `minor`, or `question`), resolve each item in code/tests strictly as directed and update its status in `workflow/<change-slug>/REVIEW.md` (or provide answers to questions). If any review item is unclear or conflicts with the spec or codebase, ask the Architect for clarification before implementing.
-   - **KISS/SOLID Remediation**: When review flags KISS/SOLID violations, fix the root cause (simplify, split responsibilities, invert dependencies) rather than papering over symptoms.
+   - **Remediation**: When review flags over-engineering or unnecessary abstraction, fix the root cause (simplify, split responsibilities) rather than papering over symptoms.
 
 4. **Track Progress**
    - Keep step and task statuses (`in_progress`, `blocked`, `done`) updated in `workflow/<change-slug>/PLAN.md` and `workflow/<change-slug>/TASKS.md`.
@@ -112,7 +101,15 @@ The Worker turns the Architect's specifications and plans into clean, well-teste
 - **Follow review directives strictly**: Address every open item in `workflow/<change-slug>/REVIEW.md` as directed; do not silently ignore, override, or diverge from a review directive without explicit Architect approval.
 - **Respect scope boundaries**: When working on a specific task in `workflow/<change-slug>/TASKS.md` (or alongside other active `workflow/<other-slug>/` plans), do not modify files owned by other parallel tasks or unrelated areas of the codebase.
 - **Never commit `workflow/`**: Ensure `workflow/` remains untracked by Git per `spec-driven-workflow`.
-- **KISS/SOLID Compliance**: Every implementation decision must pass the KISS/SOLID test. If a simpler or more SOLID-compliant approach exists within the spec constraints, choose it. Escalate to Architect only when constraints force a trade-off.
+- **KISS/SOLID Compliance**: Every implementation decision must pass the doctrine test from `code-simplification` (KISS master, SOLID contextual, grade by concrete harm). Choose the simpler approach within spec constraints. Escalate to Architect only when constraints force a trade-off.
+
+---
+
+## Done When
+
+- The SPEC/PLAN/REVIEW artifacts reference `code-simplification` and contain no second doctrine definition.
+- The Worker's implementation passes the KISS-first rule; any SOLID deviation is graded by concrete harm and documented.
+- All open `blocker` and `major` findings in `REVIEW.md` are resolved; `REVIEW.md` is `Approved`.
 
 ---
 
@@ -130,7 +127,7 @@ The Architect and Worker (and optionally the Product Owner via `product-owner`) 
 [Worker]        2. Implement & Verify-> Executes workflow/<change-slug>/PLAN.md / TASKS.md, runs tests, marks done
        │
        ▼
-[Architect]     3. Review & Gate     -> Inspects diff, runs checks, writes workflow/<change-slug>/REVIEW.md (KISS/SOLID as primary criteria)
+[Architect]     3. Review & Gate     -> Inspects diff, runs checks, writes workflow/<change-slug>/REVIEW.md (KISS primary; SOLID contextual)
        │
        ├── If Changes Requested ──────► [Worker] resolves open items in REVIEW.md
        │

@@ -19,7 +19,7 @@ Review code changes against both **engineering quality** and **specification int
 - **Net improvement over perfection**: Approve changes that clearly improve overall code health and satisfy `workflow/<change-slug>/SPEC.md`, even if minor stylistic preferences differ.
 - **Evidence over opinion**: Ground every finding in a concrete file path, line range or symbol, and explain *why* it matters — **citing KISS/SOLID principle violations explicitly when applicable**.
 - **Zero silent passes**: Do not approve or finish work while any `blocker` or `major` finding remains `open`.
-- **KISS/SOLID as Primary Criteria**: KISS as primary; SOLID as contextual (where it applies). Both are first-class review dimensions, not afterthoughts. Severity is graded by concrete harm (testability, coupling, change amplification); idiomatic non-OOP code is not penalized for not following SOLID.
+- **KISS as Primary; SOLID as Contextual**: KISS as primary; SOLID as contextual (where it applies). Both are first-class review dimensions, not afterthoughts. Severity is graded by concrete harm (testability, coupling, change amplification); idiomatic non-OOP code is not penalized for not following SOLID.
 
 ## 1. Load Workflow Context First
 
@@ -43,12 +43,7 @@ Evaluate the diff (e.g., `git diff`, staged changes, or target PR) across all **
 - **Violations**: Over-engineering, clever one-liners, YAGNI code, speculative generality → severity graded by concrete harm (testability, coupling, change amplification), not automatically `major`/`blocker`
 
 ### Axis 2: SOLID — Design Principles Compliance (NEW — Contextual)
-- **SRP**: Does each class/module/function have a single, clear responsibility? One reason to change?
-- **OCP**: Can behavior be extended without modifying existing code? Are extension points used instead of modification?
-- **LSP**: Are subtypes safely substitutable for their base types? Do inheritance hierarchies respect behavioral contracts?
-- **ISP**: Are interfaces small and focused? Are clients forced to depend on methods they don't use?
-- **DIP**: Does code depend on abstractions (interfaces/protocols) rather than concretions? Are high-level modules decoupled from low-level details?
-- **Violations**: A SOLID breach is a finding only where the principle applies (designs using classes/interfaces/module contracts) **and** it causes concrete harm (testability, coupling, change amplification). Severity is graded by that harm, not automatically `major`/`blocker`; idiomatic non-OOP code is not a violation.
+- **SRP/OCP/LSP/ISP/DIP**: See `code-simplification` for the five principles; grade any deviation by concrete harm (testability, coupling, change amplification). **Violations**: A SOLID breach is a finding only where the principle applies (designs using classes/interfaces/module contracts) **and** it causes concrete harm. Severity is graded by that harm, not automatically `major`/`blocker`; idiomatic non-OOP code is not a violation.
 
 ### Axis 3: Correctness & Spec Alignment
 - Does the implementation satisfy every acceptance criterion in `workflow/<change-slug>/SPEC.md`?

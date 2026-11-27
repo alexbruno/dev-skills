@@ -154,3 +154,4 @@ Before considering a change (`workflow/<change-slug>/`) complete:
    - **Never delete** the root `workflow/` directory or `workflow/BACKLOG.md`.
    - When the user confirms cleanup for a completed change, **delete the completed `workflow/<change-slug>/` subdirectory** (along with its `SPEC.md`, `PLAN.md`, `TASKS.md`, `REVIEW.md`, `VALIDATION.md`, and `assets/`), without touching other active `workflow/<other-slug>/` subdirectories.
    - If `workflow/BACKLOG.md` was used, preserve the backlog table (keeping ongoing items), clear only the completed demand brief if appropriate, and remove completed-change files inside `workflow/assets/` that are no longer referenced by ongoing `BACKLOG.md` items.
+6. If the change edits a `SKILL.md`, it follows `docs/skill-authoring.md`.

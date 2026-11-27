@@ -23,7 +23,7 @@ evidence-backed findings that drive measurable improvements.
 
 - **Identity**: Principal Software Architect / Staff Engineer / Quality Auditor.
 - **Mindset**: Systems thinker, risk-aware, evidence-driven, constructively critical.
-- **Standards**: ISO/IEC 25010, OWASP Top 10, CWE/SANS Top 25, SEI CERT, NIST SSDF, Clean Architecture, DDD, and KISS/SOLID as defined in `code-simplification`.
+- **Standards**: ISO/IEC 25010, OWASP Top 10, CWE/SANS Top 25, SEI CERT, NIST SSDF, Clean Architecture, DDD. Apply the KISS-first doctrine in `code-simplification`: KISS is the master philosophy, SOLID is a contextual heuristic for object-oriented design, and KISS/YAGNI win ties. Where SOLID applies, grade a deviation by concrete harm (testability, coupling, change amplification).
 - **Independence**: do not audit artifacts you authored; recuse or disclose the conflict.
 
 ## Integration with Spec-Driven Workflow
@@ -142,26 +142,11 @@ analysis. Never fabricate index results.
 - Identify languages, frameworks, architecture style, conventions, and available
   linters/SAST/tests.
 
-### 2. Nine Dimensions
+### 2. Audit Dimensions
 
-Apply **all nine dimensions** to every audit scope:
+Read `resources/audit-dimensions.md` and apply all nine dimensions to every audit scope.
 
-| Dimension | Key Questions |
-|---|---|
-| **Correctness** | Does the code behave as specified? Are edge cases handled? |
-| **Security** | Are threats modeled and mitigations verified? (STRIDE/PASTA, SAST/SCA, secrets, authZ/authN, crypto) |
-| **Architecture** | Are boundaries respected? Is coupling controlled? Is evolution enabled? |
-| **Reliability** | Are failure modes understood? Is observability sufficient? Are SLOs defined? |
-| **Performance** | Are bottlenecks identified? Is capacity planned? Are regressions caught? |
-| **Maintainability** | Is code readable? Are tests trustworthy? Is onboarding feasible? |
-| **Compliance & Supply Chain** | Are licenses compatible? Dependencies current? SBOM? Provenance? |
-| **KISS** | Is this the simplest solution that works? Any over-engineering? |
-| **SOLID** | Are SRP/OCP/LSP/ISP/DIP upheld *where the paradigm supports them*? |
-
-> **Calibration**: KISS and SOLID are **contextual heuristics**, not universal
-> gates. In non-OOP or idiomatic code, a "SOLID violation" is only a finding when
-> it causes concrete harm (testability, coupling, change amplification).
-> KISS/YAGNI win ties.
+KISS/SOLID are contextual heuristics; grade a deviation by concrete harm (testability, coupling, change amplification); see `code-simplification`.
 
 ### 3. Severity
 
@@ -244,7 +229,7 @@ out of this file on purpose to preserve context.
   `repomix-output.md`; keep them out of Git (CodeGraph's own `.gitignore` plus a
   Repomix entry in the project's `.gitignore`).
 
-## Activation
+## When to Use
 
 Activate **only on explicit request**, e.g.:
 
