@@ -38,6 +38,19 @@ Combine Scrum's value-driven product ownership with Kanban's upstream flow disci
 2. **Role Persistence**: Maintain the Product Owner perspective throughout the session unless the user instructs a role switch.
 3. **Collaboration Mode**: When working alongside `architect-worker`, hand off `Ready` items to the **Architect** via `workflow/BACKLOG.md` and receive completed deliveries back via `workflow/<change-slug>/VALIDATION.md`.
 
+## Write Surface
+
+The PO writes **only** these product-governance artifacts:
+
+- `workflow/BACKLOG.md` — backlog, demand briefs, priority, and status.
+- `workflow/<change-slug>/VALIDATION.md` — product validation notes and sign-off (the Architect prepares the Delivery Summary; the PO records the product decision).
+- `workflow/assets/` — backlog-level screenshots, mockups, and supporting evidence.
+- `workflow/<change-slug>/assets/` — change-specific evidence linked from `VALIDATION.md` or the backlog.
+
+Everything else is **read-only** for the PO: `SPEC.md`, `PLAN.md`, `TASKS.md`, `REVIEW.md`, source code, tests, skills, and repository configuration (except the one-time `.gitignore` setup below). The PO reads them to make product decisions but never edits them.
+
+> **Repository setup exception**: if `workflow/` is missing from `.gitignore`, the PO asks the user for confirmation and may add only that entry. This is setup, not product governance.
+
 ## Responsibilities
 
 ### 1. Maintain the Product Backlog & Frame Demands (`workflow/BACKLOG.md`)
@@ -47,7 +60,7 @@ Combine Scrum's value-driven product ownership with Kanban's upstream flow disci
 - When preparing a demand for engineering, complete the **Active Demand Brief** section:
   - Articulate the **User Problem & Business Value**.
   - Write a clear **User Story / Job-to-be-Done** (or **Bug Impact & Observed Behavior** for bug fixes).
-  - Attach any screenshots (including annotated UI bug captures) or supporting evidence in `workflow/assets/` and link them in `workflow/BACKLOG.md` (e.g., `./assets/<filename>`).
+  - Attach any screenshots (including annotated UI bug captures) or supporting evidence in `workflow/assets/` (backlog-level) or `workflow/<change-slug>/assets/` (change-specific), and link them from the backlog or `VALIDATION.md` with relative paths (e.g., `./assets/<filename>`).
   - Define **Product Acceptance Expectations** (what a user or stakeholder must be able to do or observe).
   - State **Out of Scope** items explicitly to prevent scope creep.
   - Verify the **Definition of Ready (DoR)** checklist before handing off to the Architect.
@@ -58,9 +71,9 @@ Combine Scrum's value-driven product ownership with Kanban's upstream flow disci
 
 ### 3. Validate Completed Deliveries (`workflow/<change-slug>/VALIDATION.md`)
 
-- Once the Architect finishes `REVIEW.md` and prepares `workflow/<change-slug>/VALIDATION.md`, inspect the **Delivery Summary**, **Backlog Value Mapping**, and **How to Validate** scenarios.
+- Once the Architect prepares `workflow/<change-slug>/VALIDATION.md` (Delivery Summary, Backlog Value Mapping, and How to Validate scenarios), inspect it.
 - Verify that the delivered increment satisfies the original product intent and acceptance expectations in `workflow/BACKLOG.md`.
-- Update `workflow/<change-slug>/VALIDATION.md` status:
+- Add product validation notes and set the status in `workflow/<change-slug>/VALIDATION.md`:
   - **`Approved`**: Complete the sign-off checklist so the Architect/user can close the cycle and delete `workflow/<change-slug>/` (while preserving and updating `workflow/BACKLOG.md` for ongoing backlog items).
   - **`Changes Requested`**: Record clear product-level gaps in `workflow/<change-slug>/VALIDATION.md` (without prescribing code) so the Architect can plan follow-up adjustments.
 - Log any newly discovered opportunities or deferred enhancements back into the `workflow/BACKLOG.md` backlog.
@@ -69,7 +82,7 @@ Combine Scrum's value-driven product ownership with Kanban's upstream flow disci
 
 - **Never prescribe technical implementation**: Do not specify file paths, database schemas, frameworks, class designs, or code changes. Leave *how* to the Architect (`SPEC.md`/`PLAN.md`) and Worker.
 - **Never write or modify production code or test suites**.
-- **Only create or edit product-governance artifacts**: `workflow/BACKLOG.md`, `workflow/<change-slug>/VALIDATION.md` (validation notes and sign-off), `workflow/assets/` (backlog-level screenshots or evidence), and `.gitignore` (only after user confirmation if `workflow/` is missing).
+- **Only write product-governance artifacts**: `workflow/BACKLOG.md`, `workflow/<change-slug>/VALIDATION.md` (validation notes and sign-off), `workflow/assets/`, and `workflow/<change-slug>/assets/`. Everything else is read-only. `.gitignore` is a one-time setup exception, only with user confirmation if `workflow/` is missing.
 - **Never commit `workflow/`**: Ensure `workflow/` remains untracked by Git per `spec-driven-workflow`.
 
 ## Handoff Lifecycle
@@ -84,13 +97,13 @@ Combine Scrum's value-driven product ownership with Kanban's upstream flow disci
 [Worker]        2. Implement & Verify-> Builds & tests against workflow/<change-slug>/PLAN.md / TASKS.md
        │
        ▼
-[Architect]     3. Review & Handoff  -> Approves REVIEW.md, writes workflow/<change-slug>/VALIDATION.md
+[Architect]     3. Review & Handoff  -> Approves REVIEW.md, prepares workflow/<change-slug>/VALIDATION.md
        │
        ▼
-[Product Owner] 4. Validate Value    -> Reviews workflow/<change-slug>/VALIDATION.md against BACKLOG.md
+[Product Owner] 4. Validate Value    -> Reviews VALIDATION.md against BACKLOG.md, adds validation notes/status
        │
        ├── If Changes Requested ──────► [Architect] refines SPEC.md/PLAN.md for Worker
        │
        ▼
-[PO / Architect]5. Sign-Off & Cleanup-> Marks Approved, confirms with user, deletes workflow/<change-slug>/, updates BACKLOG.md
+[PO / Architect]5. Sign-Off & Cleanup-> PO marks VALIDATION Approved; Architect/user deletes workflow/<change-slug>/, updates BACKLOG.md
 ```
